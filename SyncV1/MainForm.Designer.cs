@@ -30,14 +30,14 @@ namespace SyncV1
         private void InitializeComponent()
         {
             this.menuPanel = new System.Windows.Forms.Panel();
+            this.OpenDir = new System.Windows.Forms.Button();
+            this.AllowToDir = new System.Windows.Forms.Button();
+            this.AddDirBtn = new System.Windows.Forms.Button();
+            this.PublicKeyLabel = new System.Windows.Forms.Label();
+            this.PublicKey = new System.Windows.Forms.Label();
+            this.AllowedLabel = new System.Windows.Forms.Label();
             this.AllowedToDirList = new System.Windows.Forms.ListView();
             this.dirsPanel = new System.Windows.Forms.Panel();
-            this.AllowedLabel = new System.Windows.Forms.Label();
-            this.PublicKey = new System.Windows.Forms.Label();
-            this.PublicKeyLabel = new System.Windows.Forms.Label();
-            this.AddDirBtn = new System.Windows.Forms.Button();
-            this.AllowToDir = new System.Windows.Forms.Button();
-            this.OpenDir = new System.Windows.Forms.Button();
             this.DirsList = new System.Windows.Forms.ListBox();
             this.menuPanel.SuspendLayout();
             this.dirsPanel.SuspendLayout();
@@ -58,6 +58,68 @@ namespace SyncV1
             this.menuPanel.Size = new System.Drawing.Size(240, 208);
             this.menuPanel.TabIndex = 0;
             // 
+            // OpenDir
+            // 
+            this.OpenDir.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.OpenDir.Enabled = false;
+            this.OpenDir.Location = new System.Drawing.Point(0, 3);
+            this.OpenDir.Name = "OpenDir";
+            this.OpenDir.Size = new System.Drawing.Size(240, 23);
+            this.OpenDir.TabIndex = 6;
+            this.OpenDir.Text = "Открыть директорию";
+            this.OpenDir.UseVisualStyleBackColor = true;
+            // 
+            // AllowToDir
+            // 
+            this.AllowToDir.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.AllowToDir.Enabled = false;
+            this.AllowToDir.Location = new System.Drawing.Point(0, 26);
+            this.AllowToDir.Name = "AllowToDir";
+            this.AllowToDir.Size = new System.Drawing.Size(240, 23);
+            this.AllowToDir.TabIndex = 5;
+            this.AllowToDir.Text = "Предоставить доступ";
+            this.AllowToDir.UseVisualStyleBackColor = true;
+            // 
+            // AddDirBtn
+            // 
+            this.AddDirBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.AddDirBtn.Location = new System.Drawing.Point(0, 49);
+            this.AddDirBtn.Name = "AddDirBtn";
+            this.AddDirBtn.Size = new System.Drawing.Size(240, 23);
+            this.AddDirBtn.TabIndex = 4;
+            this.AddDirBtn.Text = "Создать директорию";
+            this.AddDirBtn.UseVisualStyleBackColor = true;
+            // 
+            // PublicKeyLabel
+            // 
+            this.PublicKeyLabel.AutoSize = true;
+            this.PublicKeyLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.PublicKeyLabel.Location = new System.Drawing.Point(0, 72);
+            this.PublicKeyLabel.Name = "PublicKeyLabel";
+            this.PublicKeyLabel.Size = new System.Drawing.Size(94, 13);
+            this.PublicKeyLabel.TabIndex = 3;
+            this.PublicKeyLabel.Text = "Публичный ключ:";
+            // 
+            // PublicKey
+            // 
+            this.PublicKey.AutoSize = true;
+            this.PublicKey.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.PublicKey.Location = new System.Drawing.Point(0, 85);
+            this.PublicKey.Name = "PublicKey";
+            this.PublicKey.Size = new System.Drawing.Size(141, 13);
+            this.PublicKey.TabIndex = 2;
+            this.PublicKey.Text = "Публичный ключ значение";
+            // 
+            // AllowedLabel
+            // 
+            this.AllowedLabel.AutoSize = true;
+            this.AllowedLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.AllowedLabel.Location = new System.Drawing.Point(0, 98);
+            this.AllowedLabel.Name = "AllowedLabel";
+            this.AllowedLabel.Size = new System.Drawing.Size(140, 13);
+            this.AllowedLabel.TabIndex = 1;
+            this.AllowedLabel.Text = "Пользователи с доступом";
+            // 
             // AllowedToDirList
             // 
             this.AllowedToDirList.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -76,68 +138,6 @@ namespace SyncV1
             this.dirsPanel.Name = "dirsPanel";
             this.dirsPanel.Size = new System.Drawing.Size(560, 208);
             this.dirsPanel.TabIndex = 1;
-            // 
-            // AllowedLabel
-            // 
-            this.AllowedLabel.AutoSize = true;
-            this.AllowedLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.AllowedLabel.Location = new System.Drawing.Point(0, 98);
-            this.AllowedLabel.Name = "AllowedLabel";
-            this.AllowedLabel.Size = new System.Drawing.Size(140, 13);
-            this.AllowedLabel.TabIndex = 1;
-            this.AllowedLabel.Text = "Пользователи с доступом";
-            // 
-            // PublicKey
-            // 
-            this.PublicKey.AutoSize = true;
-            this.PublicKey.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PublicKey.Location = new System.Drawing.Point(0, 85);
-            this.PublicKey.Name = "PublicKey";
-            this.PublicKey.Size = new System.Drawing.Size(141, 13);
-            this.PublicKey.TabIndex = 2;
-            this.PublicKey.Text = "Публичный ключ значение";
-            // 
-            // PublicKeyLabel
-            // 
-            this.PublicKeyLabel.AutoSize = true;
-            this.PublicKeyLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PublicKeyLabel.Location = new System.Drawing.Point(0, 72);
-            this.PublicKeyLabel.Name = "PublicKeyLabel";
-            this.PublicKeyLabel.Size = new System.Drawing.Size(94, 13);
-            this.PublicKeyLabel.TabIndex = 3;
-            this.PublicKeyLabel.Text = "Публичный ключ:";
-            // 
-            // AddDirBtn
-            // 
-            this.AddDirBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.AddDirBtn.Location = new System.Drawing.Point(0, 49);
-            this.AddDirBtn.Name = "AddDirBtn";
-            this.AddDirBtn.Size = new System.Drawing.Size(240, 23);
-            this.AddDirBtn.TabIndex = 4;
-            this.AddDirBtn.Text = "Создать директорию";
-            this.AddDirBtn.UseVisualStyleBackColor = true;
-            // 
-            // AllowToDir
-            // 
-            this.AllowToDir.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.AllowToDir.Enabled = false;
-            this.AllowToDir.Location = new System.Drawing.Point(0, 26);
-            this.AllowToDir.Name = "AllowToDir";
-            this.AllowToDir.Size = new System.Drawing.Size(240, 23);
-            this.AllowToDir.TabIndex = 5;
-            this.AllowToDir.Text = "Предоставить доступ";
-            this.AllowToDir.UseVisualStyleBackColor = true;
-            // 
-            // OpenDir
-            // 
-            this.OpenDir.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.OpenDir.Enabled = false;
-            this.OpenDir.Location = new System.Drawing.Point(0, 3);
-            this.OpenDir.Name = "OpenDir";
-            this.OpenDir.Size = new System.Drawing.Size(240, 23);
-            this.OpenDir.TabIndex = 6;
-            this.OpenDir.Text = "Открыть директорию";
-            this.OpenDir.UseVisualStyleBackColor = true;
             // 
             // DirsList
             // 

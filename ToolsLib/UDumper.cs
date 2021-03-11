@@ -4,16 +4,16 @@ using System.Security.Cryptography;
 
 namespace ToolsLib
 {
-    public static class Cryptor
+    public static class UDumper
     {
-        public static void Encrypt(string encrString)
+        public static void Dump(string encrString, string encrPath)
         {
             byte[] key = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16 };
 
             try
             {
                 //Create a file stream
-                using (var myStream = new FileStream("TokenDumpEncr.txt", FileMode.OpenOrCreate))
+                using (var myStream = new FileStream(encrPath, FileMode.OpenOrCreate))
                 {
                     //Create a new instance of the default Aes implementation class  
                     // and configure encryption key.  
@@ -50,7 +50,7 @@ namespace ToolsLib
             }
         }
 
-        public static string Decrypt(string pathToDecr)
+        public static string Restore(string pathToDecr)
         {
             byte[] key = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16 };
 

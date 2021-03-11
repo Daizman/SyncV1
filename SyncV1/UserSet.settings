@@ -2,8 +2,8 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SyncV1" GeneratedClassName="UserSet">
   <Profiles />
   <Settings>
-    <Setting Name="UserData" Type="System.String" Scope="User">
-      <Value Profile="(Default)">"user_back_up.txt"</Value>
+    <Setting Name="UserDataExt" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.ubd</Value>
     </Setting>
   </Settings>
 </SettingsFile>

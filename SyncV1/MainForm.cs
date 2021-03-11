@@ -23,6 +23,9 @@ namespace SyncV1
             AllowToDir.Enabled = true;
         }
 
-
+        private bool CheckUserInfo()
+        {
+            return false;
+        }
     }
 }

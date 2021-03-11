@@ -25,13 +25,13 @@ namespace SyncV1 {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"user_back_up.txt\"")]
-        public string UserData {
+        [global::System.Configuration.DefaultSettingValueAttribute(".ubd")]
+        public string UserDataExt {
             get {
-                return ((string)(this["UserData"]));
+                return ((string)(this["UserDataExt"]));
             }
             set {
-                this["UserData"] = value;
+                this["UserDataExt"] = value;
             }
         }
     }
