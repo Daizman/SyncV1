@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ToolsLib
 {
-    class SockProd
+    public class SockProd
     {
     }
 }
