@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
@@ -17,7 +16,7 @@ namespace ToolsLib
         public SockProd(IPAddress ip, int port)
         {
             _ip = ip;
-            _ipEP = new IPEndPoint(ip, port);
+            _ipEP = new IPEndPoint(_ip, port);
         }
 
         public void Send(string data)
@@ -54,7 +53,7 @@ namespace ToolsLib
             }
         }
 
-        private DESCryptoServiceProvider GetDES(Socket socket, string publicUserKey)
+        private DESCryptoServiceProvider GetDES(Socket socket)
         {
             var buffer = new byte[1024];
 
@@ -64,7 +63,7 @@ namespace ToolsLib
             Array.Copy(buffer, 0, publicKeyJsonByte, 0, sizeRSA);
 
             var publicKeyJson = Encoding.UTF8.GetString(publicKeyJsonByte);
-            var publicKey = JsonConvert.DeserializeObject<RSAPublicKeyParameters>(publicUserKey);
+            var publicKey = JsonConvert.DeserializeObject<RSAPublicKeyParameters>(publicKeyJson);
             var publicKeyParameters = publicKey.GetRSAParameters();
 
             var des = Cryptographer.GetDES();

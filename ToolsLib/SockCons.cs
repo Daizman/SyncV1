@@ -22,6 +22,7 @@ namespace ToolsLib
 
         public SockCons(IPAddress ip, int port)
         {
+            //ip тот, с которого принимаем
             _ip = ip;
             _socket = new Socket(_ip.AddressFamily, SocketType.Stream, ProtocolType.Udp);
             _ipEP = new IPEndPoint(_ip, port);
