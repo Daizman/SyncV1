@@ -38,8 +38,10 @@ namespace SyncV1
             this.dirsPanel = new System.Windows.Forms.Panel();
             this.DirsList = new System.Windows.Forms.ListBox();
             this.PublicKey = new System.Windows.Forms.TextBox();
+            this.FSWatcher = new System.IO.FileSystemWatcher();
             this.menuPanel.SuspendLayout();
             this.dirsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FSWatcher)).BeginInit();
             this.SuspendLayout();
             // 
             // menuPanel
@@ -137,6 +139,12 @@ namespace SyncV1
             this.PublicKey.Size = new System.Drawing.Size(240, 116);
             this.PublicKey.TabIndex = 6;
             // 
+            // FSWatcher
+            // 
+            this.FSWatcher.EnableRaisingEvents = true;
+            this.FSWatcher.SynchronizingObject = this;
+            this.FSWatcher.Changed += new System.IO.FileSystemEventHandler(this.FSWatcher_Changed);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -150,6 +158,7 @@ namespace SyncV1
             this.menuPanel.ResumeLayout(false);
             this.menuPanel.PerformLayout();
             this.dirsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.FSWatcher)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -165,6 +174,7 @@ namespace SyncV1
         private System.Windows.Forms.Button AllowToDir;
         private System.Windows.Forms.ListBox DirsList;
         private System.Windows.Forms.TextBox PublicKey;
+        private System.IO.FileSystemWatcher FSWatcher;
     }
 }
 

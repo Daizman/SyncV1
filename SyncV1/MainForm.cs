@@ -32,6 +32,10 @@ namespace SyncV1
             }
             PublicKey.Text = _user.PublicKey;
             ButtonsBind();
+            if (_user.UserDirectory.Path != "")
+            {
+                FSWatcher.Path = _user.UserDirectory.Path;
+            }
         }
 
         private void DirsList_SelectedIndexChanged(object sender, EventArgs e)
@@ -85,6 +89,7 @@ namespace SyncV1
             if (addFolderDialog.ShowDialog() == DialogResult.OK)
             {
                 _user.UserDirectory.Path = addFolderDialog.SelectedPath;
+                FSWatcher.Path = _user.UserDirectory.Path;
                 ButtonsBind();
             }
         }
@@ -93,6 +98,11 @@ namespace SyncV1
         {
             AddDirBtn.Enabled = _user.UserDirectory.Path == "";
             AllowToDir.Enabled = _user.UserDirectory.Path != "";
+        }
+
+        private void FSWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+
         }
     }
 }
