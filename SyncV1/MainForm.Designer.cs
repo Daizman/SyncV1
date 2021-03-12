@@ -164,10 +164,10 @@ namespace SyncV1
             // PublicKey
             // 
             this.PublicKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PublicKey.Enabled = false;
             this.PublicKey.Location = new System.Drawing.Point(0, 13);
             this.PublicKey.Multiline = true;
             this.PublicKey.Name = "PublicKey";
+            this.PublicKey.ReadOnly = true;
             this.PublicKey.Size = new System.Drawing.Size(240, 70);
             this.PublicKey.TabIndex = 9;
             // 
