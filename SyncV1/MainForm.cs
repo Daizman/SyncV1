@@ -25,6 +25,8 @@ namespace SyncV1
         private readonly object _locker;
         private string _ipString;
         private IPAddress _ip;
+        private int _port = 11000;
+        private string _searchedPublicKey;
         public MainForm()
         {
             InitializeComponent();
@@ -46,6 +48,7 @@ namespace SyncV1
                 SetWatcher();
                 FillDirectoryInfo();
             }
+            RunServ();
         }
 
         private void DirsList_SelectedIndexChanged(object sender, EventArgs e)
@@ -89,11 +92,10 @@ namespace SyncV1
         {
             try
             {
-
+                StopServ();
             }
             finally
             { 
-            
             }
             if (_user is null)
             {
@@ -202,15 +204,9 @@ namespace SyncV1
             _ip = Dns.GetHostEntry(host).AddressList[0];
             _ipString = _ip.ToString();
 
-            var port = 11000;
+            var server = new SockCons(_ip, _port);
 
-            var servers = new List<IRunnableServer>()
-            {
-                //new MqConsumer("192.168.0.92"),
-                //new SocketCons(ip, port)
-            };
-
-            var tasks = servers.Select(server => Task.Run(() => server.Run(this, _cancellationToken.Token))).ToArray();
+            var tasks = Task.Run(() => server.Run(this, _cancellationToken.Token));
 
             Task.WaitAll(tasks);
         }
@@ -220,18 +216,15 @@ namespace SyncV1
             _cancellationToken.Cancel();
         }
 
-        private static void SendSocket()
+        private void SendSocket()
         {
-
-            /*var ip = new IPAddress(new byte[] { 192, 168, 0, 92 });
-            var port = 11000;
-            var socketClient = new SocketProd(ip, port);
-
-            var slicedData = dbWorker.GetAllData(offset: 2);
-
-            var json = JsonConvert.SerializeObject(slicedData);
-
-            socketClient.Send(json);*/
+            var addrTemplate = "192.168.0.";
+            for (var i = 0; i < 256; i++)
+            {
+                var ip = IPAddress.Parse(addrTemplate + i.ToString());
+                var socketClient = new SockProd(ip, _port);
+                socketClient.Send(_searchedPublicKey);
+            }
         }
     }
 }

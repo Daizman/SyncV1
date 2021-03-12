@@ -37,7 +37,7 @@ namespace ToolsLib
                 return;
             }
 
-            _socket.Listen(100);
+            _socket.Listen(300);
 
             var cancelWaitTask = Task.Run(() =>
             {
