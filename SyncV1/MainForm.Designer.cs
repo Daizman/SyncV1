@@ -37,8 +37,10 @@ namespace SyncV1
             this.AllowedToDirList = new System.Windows.Forms.ListView();
             this.dirsPanel = new System.Windows.Forms.Panel();
             this.DirsList = new System.Windows.Forms.ListBox();
-            this.PublicKey = new System.Windows.Forms.TextBox();
             this.FSWatcher = new System.IO.FileSystemWatcher();
+            this.BDelFile = new System.Windows.Forms.Button();
+            this.BAddFile = new System.Windows.Forms.Button();
+            this.PublicKey = new System.Windows.Forms.TextBox();
             this.menuPanel.SuspendLayout();
             this.dirsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FSWatcher)).BeginInit();
@@ -47,6 +49,8 @@ namespace SyncV1
             // menuPanel
             // 
             this.menuPanel.Controls.Add(this.PublicKey);
+            this.menuPanel.Controls.Add(this.BAddFile);
+            this.menuPanel.Controls.Add(this.BDelFile);
             this.menuPanel.Controls.Add(this.AllowToDir);
             this.menuPanel.Controls.Add(this.AddDirBtn);
             this.menuPanel.Controls.Add(this.PublicKeyLabel);
@@ -129,6 +133,34 @@ namespace SyncV1
             this.DirsList.TabIndex = 0;
             this.DirsList.SelectedIndexChanged += new System.EventHandler(this.DirsList_SelectedIndexChanged);
             // 
+            // FSWatcher
+            // 
+            this.FSWatcher.EnableRaisingEvents = true;
+            this.FSWatcher.SynchronizingObject = this;
+            this.FSWatcher.Changed += new System.IO.FileSystemEventHandler(this.FSWatcher_Changed);
+            // 
+            // BDelFile
+            // 
+            this.BDelFile.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BDelFile.Location = new System.Drawing.Point(0, 106);
+            this.BDelFile.Name = "BDelFile";
+            this.BDelFile.Size = new System.Drawing.Size(240, 23);
+            this.BDelFile.TabIndex = 7;
+            this.BDelFile.Text = "Удалить файл";
+            this.BDelFile.UseVisualStyleBackColor = true;
+            this.BDelFile.Click += new System.EventHandler(this.BDelFile_Click);
+            // 
+            // BAddFile
+            // 
+            this.BAddFile.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BAddFile.Location = new System.Drawing.Point(0, 83);
+            this.BAddFile.Name = "BAddFile";
+            this.BAddFile.Size = new System.Drawing.Size(240, 23);
+            this.BAddFile.TabIndex = 8;
+            this.BAddFile.Text = "Добавить файл";
+            this.BAddFile.UseVisualStyleBackColor = true;
+            this.BAddFile.Click += new System.EventHandler(this.BAddFile_Click);
+            // 
             // PublicKey
             // 
             this.PublicKey.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -136,14 +168,8 @@ namespace SyncV1
             this.PublicKey.Location = new System.Drawing.Point(0, 13);
             this.PublicKey.Multiline = true;
             this.PublicKey.Name = "PublicKey";
-            this.PublicKey.Size = new System.Drawing.Size(240, 116);
-            this.PublicKey.TabIndex = 6;
-            // 
-            // FSWatcher
-            // 
-            this.FSWatcher.EnableRaisingEvents = true;
-            this.FSWatcher.SynchronizingObject = this;
-            this.FSWatcher.Changed += new System.IO.FileSystemEventHandler(this.FSWatcher_Changed);
+            this.PublicKey.Size = new System.Drawing.Size(240, 70);
+            this.PublicKey.TabIndex = 9;
             // 
             // MainForm
             // 
@@ -173,8 +199,10 @@ namespace SyncV1
         private System.Windows.Forms.Button AddDirBtn;
         private System.Windows.Forms.Button AllowToDir;
         private System.Windows.Forms.ListBox DirsList;
-        private System.Windows.Forms.TextBox PublicKey;
         private System.IO.FileSystemWatcher FSWatcher;
+        private System.Windows.Forms.TextBox PublicKey;
+        private System.Windows.Forms.Button BAddFile;
+        private System.Windows.Forms.Button BDelFile;
     }
 }
 

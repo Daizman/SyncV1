@@ -34,12 +34,14 @@ namespace SyncV1
             ButtonsBind();
             if (_user.UserDirectory.Path != "")
             {
-                FSWatcher.Path = _user.UserDirectory.Path;
+                SetWatcher();
+                FillDirectoryInfo();
             }
         }
 
         private void DirsList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ButtonsBind();
         }
 
         private void RestoreUser(string file)
@@ -83,13 +85,49 @@ namespace SyncV1
             UDumper.Dump(JsonConvert.SerializeObject(_user), "User" + UserSet.Default.UserDataExt);
         }
 
+        private void FillDirectoryInfo()
+        {
+            if (_user.UserDirectory.Path == "")
+            {
+                return;
+            }
+            DirsList.Items.Clear();
+            var allDirFiles = Directory.GetFiles(_user.UserDirectory.Path);
+            foreach (var file in allDirFiles)
+            {
+                DirsList.Items.Add(file);
+            }
+        }
+
+        private void SetWatcher()
+        {
+            FSWatcher.Path = _user.UserDirectory.Path;
+            FSWatcher.NotifyFilter = NotifyFilters.Attributes
+                                 | NotifyFilters.CreationTime
+                                 | NotifyFilters.DirectoryName
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.Security
+                                 | NotifyFilters.Size;
+
+            FSWatcher.Changed += FSWatcher_Changed;
+            FSWatcher.Created += FSWatcher_Changed;
+            FSWatcher.Deleted += FSWatcher_Changed;
+            FSWatcher.Renamed += FSWatcher_Changed;
+
+            FSWatcher.IncludeSubdirectories = true;
+            FSWatcher.EnableRaisingEvents = true;
+        }
+
         private void AddDirBtn_Click(object sender, EventArgs e)
         {
             var addFolderDialog = new CreateFolderWindow.MainForm();
             if (addFolderDialog.ShowDialog() == DialogResult.OK)
             {
                 _user.UserDirectory.Path = addFolderDialog.SelectedPath;
-                FSWatcher.Path = _user.UserDirectory.Path;
+                SetWatcher();
+                FillDirectoryInfo();
                 ButtonsBind();
             }
         }
@@ -98,11 +136,26 @@ namespace SyncV1
         {
             AddDirBtn.Enabled = _user.UserDirectory.Path == "";
             AllowToDir.Enabled = _user.UserDirectory.Path != "";
+            BAddFile.Enabled = _user.UserDirectory.Path != "";
+            BDelFile.Enabled = _user.UserDirectory.Path != "" && DirsList.SelectedIndex != -1;
         }
 
         private void FSWatcher_Changed(object sender, FileSystemEventArgs e)
         {
+            FillDirectoryInfo();
+        }
 
+        private void BAddFile_Click(object sender, EventArgs e)
+        {
+
+            ButtonsBind();
+        }
+
+        private void BDelFile_Click(object sender, EventArgs e)
+        {
+            var file = DirsList.SelectedItem;
+            File.Delete((string)file);
+            ButtonsBind();
         }
     }
 }
