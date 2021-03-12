@@ -219,5 +219,19 @@ namespace SyncV1
         {
             _cancellationToken.Cancel();
         }
+
+        private static void SendSocket()
+        {
+
+            /*var ip = new IPAddress(new byte[] { 192, 168, 0, 92 });
+            var port = 11000;
+            var socketClient = new SocketProd(ip, port);
+
+            var slicedData = dbWorker.GetAllData(offset: 2);
+
+            var json = JsonConvert.SerializeObject(slicedData);
+
+            socketClient.Send(json);*/
+        }
     }
 }
