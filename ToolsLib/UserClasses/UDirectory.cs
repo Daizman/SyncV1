@@ -6,7 +6,7 @@ namespace ToolsLib.UserClasses
     public class UDirectory
     {
         [JsonProperty("path")]
-        private string _path;
+        private string _path = "";
 
         public UDirectory()
         {
@@ -21,9 +21,9 @@ namespace ToolsLib.UserClasses
         {
             set
             {
-                if (_path != "")
+                if (value is null)
                 {
-                    throw new InvalidOperationException("Нельзя изменять путь до папки");
+                    _path = "";
                 }
                 else
                 {

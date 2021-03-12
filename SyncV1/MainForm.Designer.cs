@@ -158,6 +158,7 @@ namespace SyncV1
             this.Controls.Add(this.menuPanel);
             this.Name = "MainForm";
             this.Text = "Sync";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.menuPanel.ResumeLayout(false);
             this.menuPanel.PerformLayout();
             this.dirsPanel.ResumeLayout(false);

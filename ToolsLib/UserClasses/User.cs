@@ -7,8 +7,6 @@ namespace ToolsLib.UserClasses
 {
     public class User
     {
-        [JsonProperty("name")]
-        private readonly string _name;
         [JsonProperty("publicKey")]
         private readonly string _publicKey;
         [JsonProperty("userDirectory")]
@@ -18,35 +16,26 @@ namespace ToolsLib.UserClasses
 
         public User()
         {
+            _publicKey = GeneratePublicKey();
             Friends = new List<User>();
             _userDirectory = new UDirectory();
         }
 
-        public User(string name)
+        public User(UDirectory dir)
         {
-            _name = name;
-            _publicKey = GeneratePublicKey();
-            Friends = new List<User>();
-            _userDirectory = new UDirectory();
-        }
-        public User(string name, UDirectory dir)
-        {
-            _name = name;
             _publicKey = GeneratePublicKey();
             Friends = new List<User>();
             _userDirectory = dir;
         }
-        public User(string name, string publicKey)
+        public User(string publicKey)
         {
-            _name = name;
             _publicKey = publicKey;
             Friends = new List<User>();
             _userDirectory = new UDirectory();
         }
 
-        public User(string name, string publicKey, UDirectory dir)
+        public User(string publicKey, UDirectory dir)
         {
-            _name = name;
             _publicKey = publicKey;
             Friends = new List<User>();
             _userDirectory = dir;
@@ -65,14 +54,6 @@ namespace ToolsLib.UserClasses
             get
             {
                 return _publicKey;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
             }
         }
 

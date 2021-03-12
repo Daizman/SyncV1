@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ToolsLib;
 using ToolsLib.UserClasses;
 
 namespace SyncV1
@@ -18,6 +20,15 @@ namespace SyncV1
         public MainForm()
         {
             InitializeComponent();
+            var file = GetUserBackupFile();
+            if (file == "")
+            {
+                GenerateUser();
+            }
+            else
+            {
+                RestoreUser(file);
+            }
         }
 
         private void DirsList_SelectedIndexChanged(object sender, EventArgs e)
@@ -26,14 +37,15 @@ namespace SyncV1
             AllowToDir.Enabled = true;
         }
 
-        private void RestoreUser()
+        private void RestoreUser(string file)
         {
-
+            var restJson = UDumper.Restore(file);
+            _user = JsonConvert.DeserializeObject<User>(restJson);
         }
 
         private void GenerateUser()
-        { 
-            
+        {
+            _user = new User();
         }
 
         private string GetUserBackupFile()
@@ -48,6 +60,15 @@ namespace SyncV1
                 }
             }
             return "";
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (_user is null)
+            {
+                return;
+            }
+            UDumper.Dump(JsonConvert.SerializeObject(_user), "User" + UserSet.Default.UserDataExt);
         }
     }
 }
