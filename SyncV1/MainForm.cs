@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ToolsLib;
 using ToolsLib.UserClasses;
+using CreateFolderWindow;
 
 namespace SyncV1
 {
@@ -29,18 +30,25 @@ namespace SyncV1
             {
                 RestoreUser(file);
             }
+            PublicKey.Text = _user.PublicKey;
+            ButtonsBind();
         }
 
         private void DirsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OpenDir.Enabled = true;
-            AllowToDir.Enabled = true;
         }
 
         private void RestoreUser(string file)
         {
-            var restJson = UDumper.Restore(file);
-            _user = JsonConvert.DeserializeObject<User>(restJson);
+            try
+            {
+                var restJson = UDumper.Restore(file);
+                _user = JsonConvert.DeserializeObject<User>(restJson);
+            }
+            catch
+            {
+                GenerateUser();
+            }
         }
 
         private void GenerateUser()
@@ -69,6 +77,22 @@ namespace SyncV1
                 return;
             }
             UDumper.Dump(JsonConvert.SerializeObject(_user), "User" + UserSet.Default.UserDataExt);
+        }
+
+        private void AddDirBtn_Click(object sender, EventArgs e)
+        {
+            var addFolderDialog = new CreateFolderWindow.MainForm();
+            if (addFolderDialog.ShowDialog() == DialogResult.OK)
+            {
+                _user.UserDirectory.Path = addFolderDialog.SelectedPath;
+                ButtonsBind();
+            }
+        }
+
+        private void ButtonsBind()
+        {
+            AddDirBtn.Enabled = _user.UserDirectory.Path == "";
+            AllowToDir.Enabled = _user.UserDirectory.Path != "";
         }
     }
 }

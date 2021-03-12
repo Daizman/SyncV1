@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddUserToDirWindow", "AddUs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToolsLib", "ToolsLib\ToolsLib.csproj", "{FF36522F-B93C-474B-80EE-DE7866609B78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateFolderWindow", "CreateFolderWindow\CreateFolderWindow.csproj", "{FF5BC57B-7236-4BD7-AFFC-5ADF9566EFAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FF36522F-B93C-474B-80EE-DE7866609B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF36522F-B93C-474B-80EE-DE7866609B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF36522F-B93C-474B-80EE-DE7866609B78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF5BC57B-7236-4BD7-AFFC-5ADF9566EFAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF5BC57B-7236-4BD7-AFFC-5ADF9566EFAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF5BC57B-7236-4BD7-AFFC-5ADF9566EFAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF5BC57B-7236-4BD7-AFFC-5ADF9566EFAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

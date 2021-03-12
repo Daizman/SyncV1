@@ -139,6 +139,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CreateFolderWindow\CreateFolderWindow.csproj">
+      <Project>{ff5bc57b-7236-4bd7-affc-5adf9566efac}</Project>
+      <Name>CreateFolderWindow</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ToolsLib\ToolsLib.csproj">
       <Project>{ff36522f-b93c-474b-80ee-de7866609b78}</Project>
       <Name>ToolsLib</Name>
