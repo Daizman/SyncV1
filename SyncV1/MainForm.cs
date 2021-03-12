@@ -12,15 +12,24 @@ using System.Windows.Forms;
 using ToolsLib;
 using ToolsLib.UserClasses;
 using CreateFolderWindow;
+using ToolsLib.Interfaces;
+using System.Threading;
+using System.Net;
 
 namespace SyncV1
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IMessageHandler
     {
         private User _user;
+        private readonly CancellationTokenSource _cancellationToken;
+        private readonly object _locker;
+        private string _ipString;
+        private IPAddress _ip;
         public MainForm()
         {
             InitializeComponent();
+            _locker = new object();
+            _cancellationToken = new CancellationTokenSource();
             var file = GetUserBackupFile();
             if (file == "")
             {
@@ -78,6 +87,14 @@ namespace SyncV1
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            try
+            {
+
+            }
+            finally
+            { 
+            
+            }
             if (_user is null)
             {
                 return;
@@ -156,6 +173,51 @@ namespace SyncV1
             var file = DirsList.SelectedItem;
             File.Delete((string)file);
             ButtonsBind();
+        }
+
+        public void HandleMessage(string msg)
+        {
+            /*var cinemaSiteUsers = JsonConvert.DeserializeObject<List<CinemaSiteUser>>(msg);
+
+            var dbWorker = new DBWorker(ServerSettings.Default.DbNormalizePATH);
+            dbWorker.Connect();
+            foreach (var siteUser in cinemaSiteUsers)
+            {
+                var site = new Site(siteUser.SiteName, siteUser.SiteURL, siteUser.SiteAccess, siteUser.SiteDescription);
+                var user = new User(siteUser.UserName, siteUser.UserPassword, siteUser.UserSalt, siteUser.UserRegDate, siteUser.UserRating, site);
+
+                long siteId;
+
+                lock (locker)
+                {
+                    siteId = dbWorker.AddSite(site);
+                }
+                dbWorker.AddUser(user, siteId);
+            }
+            dbWorker.Close();*/
+        }
+        private void RunServ()
+        {
+            var host = Dns.GetHostName();
+            _ip = Dns.GetHostEntry(host).AddressList[0];
+            _ipString = _ip.ToString();
+
+            var port = 11000;
+
+            var servers = new List<IRunnableServer>()
+            {
+                //new MqConsumer("192.168.0.92"),
+                //new SocketCons(ip, port)
+            };
+
+            var tasks = servers.Select(server => Task.Run(() => server.Run(this, _cancellationToken.Token))).ToArray();
+
+            Task.WaitAll(tasks);
+        }
+
+        private void StopServ()
+        {
+            _cancellationToken.Cancel();
         }
     }
 }
