@@ -46,7 +46,7 @@ namespace ToolsLib
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     var recieved = _client.ReceiveAsync();
-                    Task.WaitAny(recieved, cancelWaitTask);
+                    //Task.WaitAny(recieved, cancelWaitTask);
 
                     if (cancelWaitTask.IsCompleted)
                     {
@@ -68,7 +68,7 @@ namespace ToolsLib
             if (!string.IsNullOrEmpty(data))
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
-                _client.SendAsync(dBytes, dBytes.Length, ip, _port);
+                _client.Send(dBytes, dBytes.Length, ip, _port);
             }
         }
 
