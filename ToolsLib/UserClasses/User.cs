@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ToolsLib.UserClasses
@@ -11,33 +10,60 @@ namespace ToolsLib.UserClasses
         private readonly string _publicKey;
         [JsonProperty("userDirectory")]
         private UDirectory _userDirectory;
-
-        public List<User> Friends;
+        [JsonProperty("friends")]
+        public Friends Friends { get; set; }
 
         public User()
         {
             _publicKey = GeneratePublicKey();
-            Friends = new List<User>();
+            Friends = new Friends();
             _userDirectory = new UDirectory();
         }
 
         public User(UDirectory dir)
         {
             _publicKey = GeneratePublicKey();
-            Friends = new List<User>();
+            Friends = new Friends();
             _userDirectory = dir;
         }
         public User(string publicKey)
         {
             _publicKey = publicKey;
-            Friends = new List<User>();
+            Friends = new Friends();
             _userDirectory = new UDirectory();
         }
 
         public User(string publicKey, UDirectory dir)
         {
             _publicKey = publicKey;
-            Friends = new List<User>();
+            Friends = new Friends();
+            _userDirectory = dir;
+        }
+
+        public User(Friends friends)
+        {
+            _publicKey = GeneratePublicKey();
+            Friends = friends;
+            _userDirectory = new UDirectory();
+        }
+        public User(string publicKey, Friends friends)
+        {
+            _publicKey = publicKey;
+            Friends = friends;
+            _userDirectory = new UDirectory();
+        }
+
+        public User(Friends friends, UDirectory dir)
+        {
+            _publicKey = GeneratePublicKey();
+            Friends = friends;
+            _userDirectory = dir;
+        }
+
+        public User(string publicKey, Friends friends, UDirectory dir)
+        {
+            _publicKey = publicKey;
+            Friends = friends;
             _userDirectory = dir;
         }
 
