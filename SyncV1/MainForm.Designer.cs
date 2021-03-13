@@ -60,7 +60,7 @@ namespace SyncV1
             this.menuPanel.Dock = System.Windows.Forms.DockStyle.Right;
             this.menuPanel.Location = new System.Drawing.Point(560, 0);
             this.menuPanel.Name = "menuPanel";
-            this.menuPanel.Size = new System.Drawing.Size(240, 285);
+            this.menuPanel.Size = new System.Drawing.Size(240, 420);
             this.menuPanel.TabIndex = 0;
             // 
             // PublicKey
@@ -70,13 +70,13 @@ namespace SyncV1
             this.PublicKey.Multiline = true;
             this.PublicKey.Name = "PublicKey";
             this.PublicKey.ReadOnly = true;
-            this.PublicKey.Size = new System.Drawing.Size(240, 70);
+            this.PublicKey.Size = new System.Drawing.Size(240, 205);
             this.PublicKey.TabIndex = 9;
             // 
             // BAddFile
             // 
             this.BAddFile.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BAddFile.Location = new System.Drawing.Point(0, 83);
+            this.BAddFile.Location = new System.Drawing.Point(0, 218);
             this.BAddFile.Name = "BAddFile";
             this.BAddFile.Size = new System.Drawing.Size(240, 23);
             this.BAddFile.TabIndex = 8;
@@ -87,7 +87,7 @@ namespace SyncV1
             // BDelFile
             // 
             this.BDelFile.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BDelFile.Location = new System.Drawing.Point(0, 106);
+            this.BDelFile.Location = new System.Drawing.Point(0, 241);
             this.BDelFile.Name = "BDelFile";
             this.BDelFile.Size = new System.Drawing.Size(240, 23);
             this.BDelFile.TabIndex = 7;
@@ -99,7 +99,7 @@ namespace SyncV1
             // 
             this.AllowToDir.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.AllowToDir.Enabled = false;
-            this.AllowToDir.Location = new System.Drawing.Point(0, 129);
+            this.AllowToDir.Location = new System.Drawing.Point(0, 264);
             this.AllowToDir.Name = "AllowToDir";
             this.AllowToDir.Size = new System.Drawing.Size(240, 23);
             this.AllowToDir.TabIndex = 5;
@@ -110,7 +110,7 @@ namespace SyncV1
             // AddDirBtn
             // 
             this.AddDirBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.AddDirBtn.Location = new System.Drawing.Point(0, 152);
+            this.AddDirBtn.Location = new System.Drawing.Point(0, 287);
             this.AddDirBtn.Name = "AddDirBtn";
             this.AddDirBtn.Size = new System.Drawing.Size(240, 23);
             this.AddDirBtn.TabIndex = 4;
@@ -132,7 +132,7 @@ namespace SyncV1
             // 
             this.AllowedLabel.AutoSize = true;
             this.AllowedLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.AllowedLabel.Location = new System.Drawing.Point(0, 175);
+            this.AllowedLabel.Location = new System.Drawing.Point(0, 310);
             this.AllowedLabel.Name = "AllowedLabel";
             this.AllowedLabel.Size = new System.Drawing.Size(140, 13);
             this.AllowedLabel.TabIndex = 1;
@@ -142,7 +142,7 @@ namespace SyncV1
             // 
             this.AllowedToDirList.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.AllowedToDirList.HideSelection = false;
-            this.AllowedToDirList.Location = new System.Drawing.Point(0, 188);
+            this.AllowedToDirList.Location = new System.Drawing.Point(0, 323);
             this.AllowedToDirList.Name = "AllowedToDirList";
             this.AllowedToDirList.Size = new System.Drawing.Size(240, 97);
             this.AllowedToDirList.TabIndex = 0;
@@ -154,7 +154,7 @@ namespace SyncV1
             this.dirsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dirsPanel.Location = new System.Drawing.Point(0, 0);
             this.dirsPanel.Name = "dirsPanel";
-            this.dirsPanel.Size = new System.Drawing.Size(560, 285);
+            this.dirsPanel.Size = new System.Drawing.Size(560, 420);
             this.dirsPanel.TabIndex = 1;
             // 
             // DirsList
@@ -163,7 +163,7 @@ namespace SyncV1
             this.DirsList.FormattingEnabled = true;
             this.DirsList.Location = new System.Drawing.Point(0, 0);
             this.DirsList.Name = "DirsList";
-            this.DirsList.Size = new System.Drawing.Size(560, 285);
+            this.DirsList.Size = new System.Drawing.Size(560, 420);
             this.DirsList.TabIndex = 0;
             this.DirsList.SelectedIndexChanged += new System.EventHandler(this.DirsList_SelectedIndexChanged);
             // 
@@ -177,7 +177,7 @@ namespace SyncV1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 285);
+            this.ClientSize = new System.Drawing.Size(800, 420);
             this.Controls.Add(this.dirsPanel);
             this.Controls.Add(this.menuPanel);
             this.Name = "MainForm";
