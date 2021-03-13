@@ -46,20 +46,22 @@ namespace ToolsLib
             byte[] recieved;
             Task.Run(() => {
                 Task.WaitAll(Task.Run(() => {
+                    Console.WriteLine("BefRec");
                     recieved = _client.Receive(ref _anyIPEP);
+                    Console.WriteLine("AfterRec");
                     ReceiveMessage(recieved);
                 }));
             });
         }
 
-        public void Send(string data)
+        public void Send(string data, IPAddress ip)
         {
-            var client = new UdpClient(_anyIPEP);
+            var client = new UdpClient();
+            client.Connect(new IPEndPoint(ip, _port));
             if (!string.IsNullOrEmpty(data))
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
                 client.Send(dBytes, dBytes.Length);
-                Console.WriteLine("!!!!!!!!!SEND!!!!!!!!!!");
             }
         }
 

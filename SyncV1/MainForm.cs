@@ -206,7 +206,7 @@ namespace SyncV1
             var addrTemplate = "192.168.0.";
             for (var i = 0; i < 256; i++)
             {
-
+                _checker.Send(_searchedPublicKey, IPAddress.Parse(addrTemplate + i.ToString()));
             }
         }
 
