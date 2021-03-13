@@ -17,6 +17,7 @@ namespace ToolsLib
         public UDPChecker(IPAddress ip, int port)
         {
             _client = new UdpClient(new IPEndPoint(ip, port));
+            _tcsDictionary = new ConcurrentDictionary<Tuple<string, int>, TaskCompletionSource<byte[]>>();
         }
 
         public async Task<byte[]> SendReceiveAsync(byte[] msg, string ip, int port, int timeOut)

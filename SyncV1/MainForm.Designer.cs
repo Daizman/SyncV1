@@ -73,7 +73,7 @@ namespace SyncV1
             this.AllowToDir.TabIndex = 5;
             this.AllowToDir.Text = "Предоставить доступ";
             this.AllowToDir.UseVisualStyleBackColor = true;
-            this.AllowToDir.Click += new System.EventHandler(this.AllowToDir_Click);
+            this.AllowToDir.Click += new System.EventHandler(this.AllowToDir_ClickAsync);
             // 
             // AddDirBtn
             // 

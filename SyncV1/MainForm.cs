@@ -226,28 +226,28 @@ namespace SyncV1
             _cancellationToken.Cancel();
         }
 
-        private void SendSocket()
+        private async Task SendSocketAsync()
         {
             var addrTemplate = "192.168.0.";
             var msg = Encoding.UTF8.GetBytes(_searchedPublicKey);
             for (var i = 0; i < 256; i++)
             {
                 //var ip = IPAddress.Parse(addrTemplate + i.ToString());
-                var answ = _checker.SendReceiveAsync(msg, addrTemplate + i.ToString(), _port, 1);
+                var answ = await _checker.SendReceiveAsync(msg, addrTemplate + i.ToString(), _port, 1);
                 var tt = 1;
                 //var socketSend = new SockProd(ip, _port, _searchedPublicKey);
                 //socketSend.Send("Hi");
             }
         }
 
-        private void AllowToDir_Click(object sender, EventArgs e)
+        private async Task AllowToDir_ClickAsync(object sender, EventArgs e)
         {
             var addUserToDir = new AddUserToDirWindow();
             addUserToDir.ShowDialog();
             if (addUserToDir.DialogResult == DialogResult.OK)
             {
                 _searchedPublicKey = addUserToDir.AddedUserPublicKey;
-                SendSocket();
+                await SendSocketAsync();
             }
         }
     }
