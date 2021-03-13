@@ -30,6 +30,9 @@ namespace SyncV1
         private void InitializeComponent()
         {
             this.menuPanel = new System.Windows.Forms.Panel();
+            this.PublicKey = new System.Windows.Forms.TextBox();
+            this.BAddFile = new System.Windows.Forms.Button();
+            this.BDelFile = new System.Windows.Forms.Button();
             this.AllowToDir = new System.Windows.Forms.Button();
             this.AddDirBtn = new System.Windows.Forms.Button();
             this.PublicKeyLabel = new System.Windows.Forms.Label();
@@ -38,9 +41,6 @@ namespace SyncV1
             this.dirsPanel = new System.Windows.Forms.Panel();
             this.DirsList = new System.Windows.Forms.ListBox();
             this.FSWatcher = new System.IO.FileSystemWatcher();
-            this.BDelFile = new System.Windows.Forms.Button();
-            this.BAddFile = new System.Windows.Forms.Button();
-            this.PublicKey = new System.Windows.Forms.TextBox();
             this.OFDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuPanel.SuspendLayout();
             this.dirsPanel.SuspendLayout();
@@ -62,6 +62,38 @@ namespace SyncV1
             this.menuPanel.Name = "menuPanel";
             this.menuPanel.Size = new System.Drawing.Size(240, 285);
             this.menuPanel.TabIndex = 0;
+            // 
+            // PublicKey
+            // 
+            this.PublicKey.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PublicKey.Location = new System.Drawing.Point(0, 13);
+            this.PublicKey.Multiline = true;
+            this.PublicKey.Name = "PublicKey";
+            this.PublicKey.ReadOnly = true;
+            this.PublicKey.Size = new System.Drawing.Size(240, 70);
+            this.PublicKey.TabIndex = 9;
+            // 
+            // BAddFile
+            // 
+            this.BAddFile.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BAddFile.Location = new System.Drawing.Point(0, 83);
+            this.BAddFile.Name = "BAddFile";
+            this.BAddFile.Size = new System.Drawing.Size(240, 23);
+            this.BAddFile.TabIndex = 8;
+            this.BAddFile.Text = "Добавить файл";
+            this.BAddFile.UseVisualStyleBackColor = true;
+            this.BAddFile.Click += new System.EventHandler(this.BAddFile_Click);
+            // 
+            // BDelFile
+            // 
+            this.BDelFile.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BDelFile.Location = new System.Drawing.Point(0, 106);
+            this.BDelFile.Name = "BDelFile";
+            this.BDelFile.Size = new System.Drawing.Size(240, 23);
+            this.BDelFile.TabIndex = 7;
+            this.BDelFile.Text = "Удалить файл";
+            this.BDelFile.UseVisualStyleBackColor = true;
+            this.BDelFile.Click += new System.EventHandler(this.BDelFile_Click);
             // 
             // AllowToDir
             // 
@@ -140,38 +172,6 @@ namespace SyncV1
             this.FSWatcher.EnableRaisingEvents = true;
             this.FSWatcher.SynchronizingObject = this;
             this.FSWatcher.Changed += new System.IO.FileSystemEventHandler(this.FSWatcher_Changed);
-            // 
-            // BDelFile
-            // 
-            this.BDelFile.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BDelFile.Location = new System.Drawing.Point(0, 106);
-            this.BDelFile.Name = "BDelFile";
-            this.BDelFile.Size = new System.Drawing.Size(240, 23);
-            this.BDelFile.TabIndex = 7;
-            this.BDelFile.Text = "Удалить файл";
-            this.BDelFile.UseVisualStyleBackColor = true;
-            this.BDelFile.Click += new System.EventHandler(this.BDelFile_Click);
-            // 
-            // BAddFile
-            // 
-            this.BAddFile.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BAddFile.Location = new System.Drawing.Point(0, 83);
-            this.BAddFile.Name = "BAddFile";
-            this.BAddFile.Size = new System.Drawing.Size(240, 23);
-            this.BAddFile.TabIndex = 8;
-            this.BAddFile.Text = "Добавить файл";
-            this.BAddFile.UseVisualStyleBackColor = true;
-            this.BAddFile.Click += new System.EventHandler(this.BAddFile_Click);
-            // 
-            // PublicKey
-            // 
-            this.PublicKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PublicKey.Location = new System.Drawing.Point(0, 13);
-            this.PublicKey.Multiline = true;
-            this.PublicKey.Name = "PublicKey";
-            this.PublicKey.ReadOnly = true;
-            this.PublicKey.Size = new System.Drawing.Size(240, 70);
-            this.PublicKey.TabIndex = 9;
             // 
             // MainForm
             // 

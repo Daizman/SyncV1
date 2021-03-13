@@ -212,7 +212,7 @@ namespace SyncV1
             _ip = Dns.GetHostEntry(host).AddressList[0];
             _ipString = _ip.ToString();
             _checker = new UDPChecker(_ip, _port);
-            _checker.Run();
+            _checker.Run(this, _cancellationToken.Token);
 
             /*var server = new SockCons(_ip, _port, _user.PublicKey);
 
@@ -229,13 +229,12 @@ namespace SyncV1
         private async Task SendSocketAsync()
         {
             var addrTemplate = "192.168.0.";
-            var msg = Encoding.UTF8.GetBytes(_searchedPublicKey);
             for (var i = 0; i < 256; i++)
             {
                 //var ip = IPAddress.Parse(addrTemplate + i.ToString());
                 try
                 {
-                    var answ = await _checker.SendReceiveAsync(msg, addrTemplate + i.ToString(), _port, 1);
+                    _checker.Send(_searchedPublicKey, addrTemplate + i.ToString());
                     var tt = 1;
                     Console.WriteLine("SetMeUp");
                 }

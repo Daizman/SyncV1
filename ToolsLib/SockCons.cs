@@ -76,7 +76,7 @@ namespace ToolsLib
 
                 do
                 {
-                    int size = socket.ReceiveFrom(buffer, ref anyIP);
+                    int size = socket.Receive(buffer);
                     var bytes = new byte[size];
                     Array.Copy(buffer, 0, bytes, 0, size);
                     dataJ.Add(bytes);
