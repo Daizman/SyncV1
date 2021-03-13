@@ -21,6 +21,7 @@ namespace ToolsLib
         private readonly IPEndPoint _ipEP;
         private readonly List<Task> _tasks;
         private readonly int _port;
+        private IPEndPoint _anyIPEP;
 
         public UDPChecker(IPAddress ip, int port)
         {
@@ -29,6 +30,7 @@ namespace ToolsLib
             _ipEP = new IPEndPoint(_ip, _port);
             _client = new UdpClient(_ipEP);
             _tasks = new List<Task>();
+            _anyIPEP = new IPEndPoint(IPAddress.Any, _port);
         }
 
         public void Run(IMessageHandler handler, CancellationToken cancellationToken)
@@ -41,29 +43,8 @@ namespace ToolsLib
                     resetEvent.WaitOne();
                 }
             });
-            Task.Run(()=> {
-                try
-                {
-                    while (!cancellationToken.IsCancellationRequested)
-                    {
-                        var recieved = _client.ReceiveAsync();
-                        Task.WaitAny(recieved, cancelWaitTask);
-
-                        if (cancelWaitTask.IsCompleted)
-                        {
-                            break;
-                        }
-
-                        var task = Task.Run(() => ReceiveMessage(handler, recieved.Result));
-
-                        _tasks.Add(task);
-                    }
-                }
-                catch (Exception e)
-                {
-                }
-            });
-            
+            var recieved = _client.Receive(ref _anyIPEP);
+            Task.Run(() => ReceiveMessage(handler, recieved));
         }
 
         public void Send(string data, string ip)
@@ -71,21 +52,14 @@ namespace ToolsLib
             if (!string.IsNullOrEmpty(data))
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
-                Console.BackgroundColor = ConsoleColor.Green;
-                Console.WriteLine("!!!!!!!!!ИУАSEND!!!!!!!!!!");
-                Console.ResetColor();
-                _client.SendAsync(dBytes, dBytes.Length, ip, _port);
-                Console.BackgroundColor = ConsoleColor.Green;
+                _client.Send(dBytes, dBytes.Length, ip, _port);
                 Console.WriteLine("!!!!!!!!!SEND!!!!!!!!!!");
-                Console.ResetColor();
             }
         }
 
-        private void ReceiveMessage(IMessageHandler handler, UdpReceiveResult res)
+        private void ReceiveMessage(IMessageHandler handler, object res)
         {
-            Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("!!!!!!!!RECIVE!!!!!!!!!");
-            Console.ResetColor();
         }
     }
 }
