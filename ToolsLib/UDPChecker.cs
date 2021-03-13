@@ -44,25 +44,25 @@ namespace ToolsLib
                 }
             });
             Task.Run(() => {
-                while (!cancellationToken.IsCancellationRequested)
+                try
                 {
-                    Console.WriteLine("StartRec");
-                    var recieved = _client.Receive(ref _anyIPEP);
-
-                    Task.WaitAny(cancelWaitTask);
-                    if (cancelWaitTask.IsCompleted)
+                    while (true)
                     {
-                        Console.WriteLine("In_break");
-                        break;
+                        Console.WriteLine("Waiting for broadcast");
+                        byte[] bytes = _client.Receive(ref _anyIPEP);
+
+                        Console.WriteLine($"Received broadcast from {_anyIPEP} :");
+                        Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
                     }
-                    Console.WriteLine("StartAft");
-
-                    var task = Task.Run(() => ReceiveMessage(recieved));
-                    Console.WriteLine("Task");
-
-                    _tasks.Add(task);
                 }
-                Task.WaitAll(_tasks.ToArray());
+                catch (SocketException e)
+                {
+                    Console.WriteLine(e);
+                }
+                finally
+                {
+                    _client.Close();
+                }
             });
         }
 
