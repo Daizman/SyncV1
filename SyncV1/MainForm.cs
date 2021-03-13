@@ -233,14 +233,22 @@ namespace SyncV1
             for (var i = 0; i < 256; i++)
             {
                 //var ip = IPAddress.Parse(addrTemplate + i.ToString());
-                var answ = await _checker.SendReceiveAsync(msg, addrTemplate + i.ToString(), _port, 1);
-                var tt = 1;
+                try
+                {
+                    var answ = await _checker.SendReceiveAsync(msg, addrTemplate + i.ToString(), _port, 1);
+                    var tt = 1;
+                    Console.WriteLine("SetMeUp");
+                }
+                catch
+                { 
+                
+                }
                 //var socketSend = new SockProd(ip, _port, _searchedPublicKey);
                 //socketSend.Send("Hi");
             }
         }
 
-        private async Task AllowToDir_ClickAsync(object sender, EventArgs e)
+        private async void AllowToDir_ClickAsync(object sender, EventArgs e)
         {
             var addUserToDir = new AddUserToDirWindow();
             addUserToDir.ShowDialog();

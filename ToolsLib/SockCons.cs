@@ -19,7 +19,6 @@ namespace ToolsLib
         private readonly List<Task> _tasks;
         private readonly IPEndPoint _ipEP;
         private readonly IPAddress _ip;
-        private readonly string _publicKey;
 
         public SockCons(IPAddress ip, int port, string publicKey)
         {
@@ -28,7 +27,6 @@ namespace ToolsLib
             _ipEP = new IPEndPoint(_ip, port);
             _socket.Bind(_ipEP);
             _tasks = new List<Task>();
-            _publicKey = publicKey;
         }
 
         public void Run(IMessageHandler handler, CancellationToken cancellationToken)
@@ -37,6 +35,8 @@ namespace ToolsLib
             {
                 return;
             }
+
+            _socket.Listen(10);
 
             var cancelWaitTask = Task.Run(() =>
             {
@@ -49,8 +49,7 @@ namespace ToolsLib
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                var buffer = new byte[1024];
-
+                var socketAcceptTask = _socket.AcceptAsync();
                 Task.WaitAny(cancelWaitTask);
 
                 if (cancelWaitTask.IsCompleted)
@@ -72,7 +71,6 @@ namespace ToolsLib
             {
                 var des = GetDES(socket);
                 var buffer = new byte[1024];
-                EndPoint anyIP = new IPEndPoint(IPAddress.Any, 11000);
 
                 var dataJ = new List<byte[]>();
 
