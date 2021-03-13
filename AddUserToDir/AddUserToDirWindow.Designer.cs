@@ -30,10 +30,10 @@ namespace AddUserToDir
         private void InitializeComponent()
         {
             this.PTools = new System.Windows.Forms.Panel();
+            this.BClose = new System.Windows.Forms.Button();
+            this.BAdd = new System.Windows.Forms.Button();
             this.LPublicKey = new System.Windows.Forms.Label();
             this.TBPublicKey = new System.Windows.Forms.TextBox();
-            this.BAdd = new System.Windows.Forms.Button();
-            this.BClose = new System.Windows.Forms.Button();
             this.PTools.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,6 +46,28 @@ namespace AddUserToDir
             this.PTools.Name = "PTools";
             this.PTools.Size = new System.Drawing.Size(534, 72);
             this.PTools.TabIndex = 0;
+            // 
+            // BClose
+            // 
+            this.BClose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.BClose.Location = new System.Drawing.Point(280, 0);
+            this.BClose.Name = "BClose";
+            this.BClose.Size = new System.Drawing.Size(254, 72);
+            this.BClose.TabIndex = 1;
+            this.BClose.Text = "Отмена";
+            this.BClose.UseVisualStyleBackColor = true;
+            this.BClose.Click += new System.EventHandler(this.BClose_Click);
+            // 
+            // BAdd
+            // 
+            this.BAdd.Dock = System.Windows.Forms.DockStyle.Left;
+            this.BAdd.Location = new System.Drawing.Point(0, 0);
+            this.BAdd.Name = "BAdd";
+            this.BAdd.Size = new System.Drawing.Size(263, 72);
+            this.BAdd.TabIndex = 0;
+            this.BAdd.Text = "Добавить";
+            this.BAdd.UseVisualStyleBackColor = true;
+            this.BAdd.Click += new System.EventHandler(this.BAdd_Click);
             // 
             // LPublicKey
             // 
@@ -66,28 +88,6 @@ namespace AddUserToDir
             this.TBPublicKey.Size = new System.Drawing.Size(534, 230);
             this.TBPublicKey.TabIndex = 2;
             this.TBPublicKey.TextChanged += new System.EventHandler(this.TBPublicKey_TextChanged);
-            // 
-            // BAdd
-            // 
-            this.BAdd.Dock = System.Windows.Forms.DockStyle.Left;
-            this.BAdd.Location = new System.Drawing.Point(0, 0);
-            this.BAdd.Name = "BAdd";
-            this.BAdd.Size = new System.Drawing.Size(263, 72);
-            this.BAdd.TabIndex = 0;
-            this.BAdd.Text = "Добавить";
-            this.BAdd.UseVisualStyleBackColor = true;
-            this.BAdd.Click += new System.EventHandler(this.BAdd_Click);
-            // 
-            // BClose
-            // 
-            this.BClose.Dock = System.Windows.Forms.DockStyle.Right;
-            this.BClose.Location = new System.Drawing.Point(280, 0);
-            this.BClose.Name = "BClose";
-            this.BClose.Size = new System.Drawing.Size(254, 72);
-            this.BClose.TabIndex = 1;
-            this.BClose.Text = "Отмена";
-            this.BClose.UseVisualStyleBackColor = true;
-            this.BClose.Click += new System.EventHandler(this.BClose_Click);
             // 
             // AddUserToDirWindow
             // 

@@ -28,6 +28,7 @@ namespace AddUserToDir
         {
             AddedUserPublicKey = "";
             DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void TBPublicKey_TextChanged(object sender, EventArgs e)

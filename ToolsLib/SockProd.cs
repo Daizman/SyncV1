@@ -12,11 +12,13 @@ namespace ToolsLib
     {
         private readonly IPEndPoint _ipEP;
         private readonly IPAddress _ip;
+        private readonly string _publicKey;
 
-        public SockProd(IPAddress ip, int port)
+        public SockProd(IPAddress ip, int port, string publicKey)
         {
             _ip = ip;
             _ipEP = new IPEndPoint(_ip, port);
+            _publicKey = publicKey;
         }
 
         public void Send(string data)
@@ -25,8 +27,8 @@ namespace ToolsLib
             {
                 if (!string.IsNullOrEmpty(data))
                 {
-                    var socket = new Socket(_ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    socket.Connect(_ipEP);
+                    var socket = new Socket(_ip.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+                    socket.Bind(_ipEP);
 
                     var des = GetDES(socket);
 
@@ -55,15 +57,18 @@ namespace ToolsLib
 
         private DESCryptoServiceProvider GetDES(Socket socket)
         {
-            var buffer = new byte[1024];
+/*            var buffer = new byte[1024];
 
             // Принимаем RSA public
-            var sizeRSA = socket.Receive(buffer);
+            EndPoint ipTemp = new IPEndPoint(_ip, 11000);
+            var bytedPublicString = 
+            var sizeRSA = socket.ReceiveFrom(buffer, ref ipTemp);
             var publicKeyJsonByte = new byte[sizeRSA];
             Array.Copy(buffer, 0, publicKeyJsonByte, 0, sizeRSA);
 
-            var publicKeyJson = Encoding.UTF8.GetString(publicKeyJsonByte);
-            var publicKey = JsonConvert.DeserializeObject<RSAPublicKeyParameters>(publicKeyJson);
+            var publicKeyJson = Encoding.UTF8.GetString(publicKeyJsonByte);*/
+
+            var publicKey = JsonConvert.DeserializeObject<RSAPublicKeyParameters>(_publicKey);
             var publicKeyParameters = publicKey.GetRSAParameters();
 
             var des = Cryptographer.GetDES();
@@ -72,7 +77,7 @@ namespace ToolsLib
 
             var encrypdedDes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new DESParameters(iv, key)));
             //отправляем ключ
-            socket.Send(encrypdedDes);
+            socket.SendTo(encrypdedDes, _ipEP);
 
             return des;
         }

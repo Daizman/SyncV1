@@ -24,7 +24,7 @@ namespace ToolsLib
         {
             //ip тот, с которого принимаем
             _ip = ip;
-            _socket = new Socket(_ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            _socket = new Socket(_ip.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
             _ipEP = new IPEndPoint(_ip, port);
             _socket.Bind(_ipEP);
             _tasks = new List<Task>();
@@ -37,8 +37,6 @@ namespace ToolsLib
                 return;
             }
 
-            _socket.Listen(10);
-
             var cancelWaitTask = Task.Run(() =>
             {
                 using (var resetEvent = new ManualResetEvent(false))
@@ -50,20 +48,21 @@ namespace ToolsLib
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                var socketAcceptTask = _socket.AcceptAsync();
-                Task.WaitAny(socketAcceptTask, cancelWaitTask);
+                var buffer = new byte[1024];
+
+                Task.WaitAny(cancelWaitTask);
 
                 if (cancelWaitTask.IsCompleted)
                 {
                     break;
                 }
 
-                var task = Task.Run(() => ReceiveMessage(handler, socketAcceptTask.Result));
+                var task = Task.Run(() => ReceiveMessage(handler, _socket));
 
                 _tasks.Add(task);
             }
 
-            Task.WaitAll(_tasks.ToArray());
+            //Task.WaitAll(_tasks.ToArray());
         }
 
         private void ReceiveMessage(IMessageHandler handler, Socket socket)
@@ -72,12 +71,13 @@ namespace ToolsLib
             {
                 var des = GetDES(socket);
                 var buffer = new byte[1024];
+                EndPoint anyIP = new IPEndPoint(IPAddress.Any, 11000);
 
                 var dataJ = new List<byte[]>();
 
                 do
                 {
-                    int size = socket.Receive(buffer);
+                    int size = socket.ReceiveFrom(buffer, ref anyIP);
                     var bytes = new byte[size];
                     Array.Copy(buffer, 0, bytes, 0, size);
                     dataJ.Add(bytes);

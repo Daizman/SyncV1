@@ -15,6 +15,7 @@ using CreateFolderWindow;
 using ToolsLib.Interfaces;
 using System.Threading;
 using System.Net;
+using AddUserToDir;
 
 namespace SyncV1
 {
@@ -226,14 +227,19 @@ namespace SyncV1
             for (var i = 0; i < 256; i++)
             {
                 var ip = IPAddress.Parse(addrTemplate + i.ToString());
-                var socketClient = new SockProd(ip, _port);
-                socketClient.Send(_searchedPublicKey);
+                var socketClient = new SockProd(ip, _port, _searchedPublicKey);
+                socketClient.Send("Hi");
             }
         }
 
         private void AllowToDir_Click(object sender, EventArgs e)
         {
-
+            var addUserToDir = new AddUserToDirWindow();
+            addUserToDir.ShowDialog();
+            if (addUserToDir.DialogResult == DialogResult.OK)
+            {
+                _searchedPublicKey = addUserToDir.AddedUserPublicKey;
+            }
         }
     }
 }

@@ -139,6 +139,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AddUserToDir\AddUserToDirWindow.csproj">
+      <Project>{3b636b09-77c2-4986-9f88-2f72fc2632a7}</Project>
+      <Name>AddUserToDirWindow</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CreateFolderWindow\CreateFolderWindow.csproj">
       <Project>{ff5bc57b-7236-4bd7-affc-5adf9566efac}</Project>
       <Name>CreateFolderWindow</Name>
