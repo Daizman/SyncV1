@@ -68,7 +68,8 @@ namespace ToolsLib
             if (!string.IsNullOrEmpty(data))
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
-                _client.Send(dBytes, dBytes.Length, ip, _port);
+                _client.SendAsync(dBytes, dBytes.Length, ip, _port);
+                var stp = 1;
             }
         }
 
