@@ -222,7 +222,6 @@ namespace SyncV1
             var userJson = JsonConvert.SerializeObject(_user);
             var sendData = new Tuple<string, string>(_searchedPublicKey, userJson);
             var sendDataJson = JsonConvert.SerializeObject(sendData);
-            _checker.CD += AddDirBtn_Click;
             for (var i = 0; i < 192; i++)
             {
                 var curIp = addrTemplate + i.ToString();
