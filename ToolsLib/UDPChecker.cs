@@ -45,10 +45,10 @@ namespace ToolsLib
 
         private void ReceiveMessage()
         {
-            _reciv = new UdpClient(_port); // UdpClient для получения данных
-            IPEndPoint remoteIp = null; // адрес входящего подключения
             try
             {
+                _reciv = new UdpClient(_port); // UdpClient для получения данных
+                IPEndPoint remoteIp = null; // адрес входящего подключения
                 while (true)
                 {
                     byte[] data = _reciv.Receive(ref remoteIp); // получаем данные
@@ -108,8 +108,8 @@ namespace ToolsLib
             }
             finally
             {
+                ReceiveMessage();
             }
-            ReceiveMessage();
         }
 
         public void Close()
