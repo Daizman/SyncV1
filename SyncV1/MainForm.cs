@@ -185,11 +185,15 @@ namespace SyncV1
             if (user == null && remote == null)
             {
                 MessageBox.Show("У пользователя уже есть папка");
+                _checker.Close();
+                RunServ();
                 return;
             }
             if (user == null && remote != null)
             {
                 MessageBox.Show($"Пользователь {remote.Address} отказался от предложения");
+                _checker.Close();
+                RunServ();
                 return;
             }
             MessageBox.Show("Пользователь согласился");

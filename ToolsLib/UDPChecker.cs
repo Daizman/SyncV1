@@ -108,7 +108,6 @@ namespace ToolsLib
             }
             finally
             {
-                ReceiveMessage();
             }
         }
 
