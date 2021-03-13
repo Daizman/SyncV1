@@ -68,24 +68,24 @@ namespace ToolsLib
                             else
                             {
                                 Send("DENIED", remoteIp.Address);
-                                return;
+                                continue;
                             }
                         }
                         else
                         {
                             Send("HAVEDIR", remoteIp.Address);
-                            return;
+                            continue;
                         }
                     }
                     if (message == "HAVEDIR")
                     {
                         _messageHandler.HandleMessage(null, null);
-                        return;
+                        continue;
                     }
                     if (message == "DENIED") 
                     {
                         _messageHandler.HandleMessage(null, remoteIp);
-                        return;
+                        continue;
                     }
                     try
                     {
