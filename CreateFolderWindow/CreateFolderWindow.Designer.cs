@@ -87,7 +87,7 @@ namespace CreateFolderWindow
             this.BCreate.Name = "BCreate";
             this.BCreate.Size = new System.Drawing.Size(122, 42);
             this.BCreate.TabIndex = 0;
-            this.BCreate.Text = "Создать";
+            this.BCreate.Text = "Принять";
             this.BCreate.UseVisualStyleBackColor = true;
             this.BCreate.Click += new System.EventHandler(this.BCreate_Click);
             // 

@@ -193,6 +193,7 @@ namespace SyncV1
                 return;
             }
             MessageBox.Show("Пользователь согласился");
+            _user.Friends.Users.Add(user);
             AllowedToDirList.Items.Add(remote.Address.ToString());
         }
         private void RunServ()
@@ -213,12 +214,16 @@ namespace SyncV1
         {
             var addrTemplate = "192.168.0.";
             var ipStr = _ip.ToString();
+            var userJson = JsonConvert.SerializeObject(_user);
+            var sendData = new Tuple<string, string>(_searchedPublicKey, userJson);
+            var sendDataJson = JsonConvert.SerializeObject(sendData);
+            _checker.CD += AddDirBtn_Click;
             for (var i = 0; i < 192; i++)
             {
                 var curIp = addrTemplate + i.ToString();
                 if (curIp != ipStr)
                 {
-                    _checker.Send(_searchedPublicKey, IPAddress.Parse(curIp));
+                    _checker.Send(sendDataJson, IPAddress.Parse(curIp));
                 }
             }
         }

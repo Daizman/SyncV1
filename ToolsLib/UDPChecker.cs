@@ -23,6 +23,13 @@ namespace ToolsLib
         private IMessageHandler _messageHandler;
         private UdpClient _reciv;
 
+        private User _probFriend;
+        private string _probKey;
+
+        public delegate void CreateDir(object sender, EventArgs e);
+
+        public CreateDir CD;
+
         public UDPChecker(int port, User user)
         {
             _port = port;
@@ -43,6 +50,26 @@ namespace ToolsLib
             }
         }
 
+        private bool ParseMsg(string msg)
+        {
+            var keyW = new[] { "DENIED", "HAVEDIR" };
+            if (keyW.Contains(msg))
+            {
+                return false;
+            }
+            try
+            {
+                var parsedMsg = JsonConvert.DeserializeObject<Tuple<string, string>>(msg);
+                _probKey = parsedMsg.Item1;
+                _probFriend = JsonConvert.DeserializeObject<User>(parsedMsg.Item2);
+                return _probKey == _user.PublicKey;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void ReceiveMessage()
         {
             try
@@ -53,16 +80,26 @@ namespace ToolsLib
                 {
                     byte[] data = _reciv.Receive(ref remoteIp); // получаем данные
                     string message = Encoding.UTF8.GetString(data);
-                    if (_user.PublicKey == message)
+                    var parseTest = ParseMsg(message);
+                    if (parseTest)
                     {
                         if (_user.UserDirectory.Path == "")
                         {
                             var test = MessageBox.Show($"Хотите получить доступ к директории пользователя: {remoteIp}?", "Доступ", MessageBoxButtons.YesNo);
                             if (test == DialogResult.Yes)
                             {
-                                var goodAnswer = new Tuple<bool, User>(true, _user);
-                                var answJson = JsonConvert.SerializeObject(goodAnswer);
-                                Send(answJson, remoteIp.Address);
+                                CD(null, null);
+                                if (_user.UserDirectory.Path == "")
+                                {
+                                    Send("DENIED", remoteIp.Address);
+                                }
+                                else
+                                {
+                                    _user.Friends.Users.Add(_probFriend);
+                                    var goodAnswer = new Tuple<bool, User>(true, _user);
+                                    var answJson = JsonConvert.SerializeObject(goodAnswer);
+                                    Send(answJson, remoteIp.Address);
+                                }
                             }
                             else
                             {
