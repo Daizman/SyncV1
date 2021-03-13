@@ -53,7 +53,6 @@ namespace ToolsLib
                 {
                     byte[] data = _reciv.Receive(ref remoteIp); // получаем данные
                     string message = Encoding.UTF8.GetString(data);
-                    Console.WriteLine("MESSAGE:" + message);
                     if (_user.PublicKey == message)
                     {
                         if (_user.UserDirectory.Path == "")
@@ -115,7 +114,6 @@ namespace ToolsLib
         {
             var client = new UdpClient();
             var end = new IPEndPoint(ip, _port);
-           // client.Connect(end);
             if (!string.IsNullOrEmpty(data))
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
