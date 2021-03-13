@@ -95,7 +95,7 @@ namespace ToolsLib
                     }
                 }
                 var data = Cryptographer.SymmetricDecrypt(array, des);
-                handler.HandleMessage(data);
+                //handler.HandleMessage(data);
             }
             catch (Exception ex)
             {
