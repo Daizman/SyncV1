@@ -14,9 +14,9 @@ namespace ToolsLib
         private ConcurrentDictionary<Tuple<string, int>, TaskCompletionSource<byte[]>> _tcsDictionary;
         private UdpClient _client;
 
-        public UDPChecker()
+        public UDPChecker(IPAddress ip, int port)
         {
-            _client = new UdpClient();
+            _client = new UdpClient(new IPEndPoint(ip, port));
         }
 
         public async Task<byte[]> SendReceiveAsync(byte[] msg, string ip, int port, int timeOut)

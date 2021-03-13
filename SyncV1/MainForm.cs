@@ -211,7 +211,7 @@ namespace SyncV1
             var host = Dns.GetHostName();
             _ip = Dns.GetHostEntry(host).AddressList[0];
             _ipString = _ip.ToString();
-            _checker = new UDPChecker();
+            _checker = new UDPChecker(_ip, _port);
             _checker.Run();
 
             /*var server = new SockCons(_ip, _port, _user.PublicKey);
