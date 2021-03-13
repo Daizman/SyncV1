@@ -53,6 +53,7 @@ namespace ToolsLib
                 {
                     byte[] data = _reciv.Receive(ref remoteIp); // получаем данные
                     string message = Encoding.UTF8.GetString(data);
+                    Console.WriteLine("MESSAGE:" + message);
                     if (_user.PublicKey == message)
                     {
                         if (_user.UserDirectory.Path == "")
