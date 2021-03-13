@@ -84,18 +84,10 @@ namespace ToolsLib
                             var test = MessageBox.Show($"Хотите получить доступ к директории пользователя: {remoteIp}?", "Доступ", MessageBoxButtons.YesNo);
                             if (test == DialogResult.Yes)
                             {
-                                _messageHandler.HandleMessage(_probFriend, null);
-                                if (_user.UserDirectory.Path == "")
-                                {
-                                    Send("DENIED", remoteIp.Address);
-                                }
-                                else
-                                {
-                                    _user.Friends.Users.Add(_probFriend);
-                                    var goodAnswer = new Tuple<bool, User>(true, _user);
-                                    var answJson = JsonConvert.SerializeObject(goodAnswer);
-                                    Send(answJson, remoteIp.Address);
-                                }
+                                _user.Friends.Users.Add(_probFriend);
+                                var goodAnswer = new Tuple<bool, User>(true, _user);
+                                var answJson = JsonConvert.SerializeObject(goodAnswer);
+                                Send(answJson, remoteIp.Address);
                             }
                             else
                             {

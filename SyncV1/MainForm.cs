@@ -192,18 +192,7 @@ namespace SyncV1
                 MessageBox.Show($"Пользователь {remote.Address} отказался от предложения");
                 return;
             }
-            if(user != null && remote == null)
-            {
-                var addFolderDialog = new CreateFolderWindow.MainForm();
-                if (addFolderDialog.ShowDialog() == DialogResult.OK)
-                {
-                    _user.UserDirectory.Path = addFolderDialog.SelectedPath;
-                    SetWatcher();
-                    FillDirectoryInfo();
-                    ButtonsBind();
-                }
-                return;
-            }
+
             MessageBox.Show("Пользователь согласился");
             _user.Friends.Users.Add(user);
             AllowedToDirList.Items.Add(remote.Address.ToString());
