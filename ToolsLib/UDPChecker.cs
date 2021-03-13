@@ -52,10 +52,6 @@ namespace ToolsLib
                 while (true)
                 {
                     byte[] data = _reciv.Receive(ref remoteIp); // получаем данные
-                    if (remoteIp.Port != _port)
-                    {
-                        continue;
-                    }
                     string message = Encoding.UTF8.GetString(data);
                     if (_user.PublicKey == message)
                     {
@@ -67,15 +63,18 @@ namespace ToolsLib
                                 var goodAnswer = new Tuple<bool, User>(true, _user);
                                 var answJson = JsonConvert.SerializeObject(goodAnswer);
                                 Send(answJson, remoteIp.Address);
+                                return;
                             }
                             else
                             {
                                 Send("DENIED", remoteIp.Address);
+                                return;
                             }
                         }
                         else
                         {
                             Send("HAVEDIR", remoteIp.Address);
+                            return;
                         }
                     }
                     if (message == "HAVEDIR")
