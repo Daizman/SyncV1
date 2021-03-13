@@ -9,32 +9,28 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ToolsLib.Cryptor;
 using ToolsLib.Interfaces;
+using ToolsLib.UserClasses;
 
 namespace ToolsLib
 {
     public class UDPChecker
     {
-        private readonly UdpClient _client;
-        private readonly IPAddress _ip;
-        private readonly IPEndPoint _ipEP;
-        private readonly List<Task> _tasks;
         private readonly int _port;
-        private IPEndPoint _anyIPEP;
+        private readonly User _user;
+        private IMessageHandler _messageHandler;
 
-        public UDPChecker(IPAddress ip, int port)
+        public UDPChecker(int port, User user)
         {
-            _ip = ip;
             _port = port;
-            _ipEP = new IPEndPoint(_ip, _port);
-            _client = new UdpClient(_ipEP);
-            _tasks = new List<Task>();
-            _anyIPEP = new IPEndPoint(IPAddress.Any, _port);
+            _user = user;
         }
 
         public void Run(IMessageHandler handler, CancellationToken cancellationToken)
         {
+            _messageHandler = handler;
             try
             {
                 Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
@@ -56,7 +52,51 @@ namespace ToolsLib
                 {
                     byte[] data = receiver.Receive(ref remoteIp); // получаем данные
                     string message = Encoding.UTF8.GetString(data);
-                    Console.WriteLine($"Data{message}, ip:{remoteIp}");
+                    if (_user.PublicKey == message)
+                    {
+                        if (_user.UserDirectory.Path == "")
+                        {
+                            var test = MessageBox.Show("Доступ", $"Хотите получить доступ к директории пользователя: {remoteIp}?", MessageBoxButtons.YesNo);
+                            if (test == DialogResult.Yes)
+                            {
+                                var goodAnswer = new Tuple<bool, User>(true, _user);
+                                var answJson = JsonConvert.SerializeObject(goodAnswer);
+                                Send(answJson, remoteIp.Address);
+                            }
+                            else
+                            {
+                                Send("DENIED", remoteIp.Address);
+                            }
+                        }
+                        else
+                        {
+                            Send("HAVEDIR", remoteIp.Address);
+                        }
+                    }
+                    if (message == "HAVEDIR")
+                    {
+                        _messageHandler.HandleMessage(null, null);
+                        return;
+                    }
+                    if (message == "DENIED") 
+                    {
+                        _messageHandler.HandleMessage(null, remoteIp);
+                        return;
+                    }
+                    try
+                    {
+                        var answ = JsonConvert.DeserializeObject<Tuple<bool, User>>(message);
+                        if (answ.Item1)
+                        {
+                            _messageHandler.HandleMessage(answ.Item2, remoteIp);
+                            return;
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
             catch (Exception ex)
@@ -77,11 +117,6 @@ namespace ToolsLib
                 var dBytes = Encoding.UTF8.GetBytes(data);
                 client.Send(dBytes, dBytes.Length);
             }
-        }
-
-        private void ReceiveMessage(object res)
-        {
-            Console.WriteLine("!!!!!!!!RECIVE!!!!!!!!!");
         }
     }
 }

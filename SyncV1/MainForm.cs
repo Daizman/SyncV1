@@ -23,8 +23,6 @@ namespace SyncV1
     {
         private User _user;
         private readonly CancellationTokenSource _cancellationToken;
-        private readonly object _locker;
-        private string _ipString;
         private UDPChecker _checker;
         private IPAddress _ip;
         private int _port = 11000;
@@ -32,7 +30,6 @@ namespace SyncV1
         public MainForm()
         {
             InitializeComponent();
-            _locker = new object();
             _cancellationToken = new CancellationTokenSource();
             var file = GetUserBackupFile();
             if (file == "")
@@ -183,16 +180,26 @@ namespace SyncV1
             ButtonsBind();
         }
 
-        public void HandleMessage(string msg)
+        public void HandleMessage(User user, IPEndPoint remote)
         {
-
+            if (user == null && remote == null)
+            {
+                MessageBox.Show("У пользователя уже есть папка");
+                return;
+            }
+            if (user == null && remote != null)
+            {
+                MessageBox.Show($"Пользователь {remote.Address} отказался от предложения");
+                return;
+            }
+            MessageBox.Show("Пользователь согласился");
+            AllowedToDirList.Items.Add(remote.Address.ToString());
         }
         private void RunServ()
         {
             var host = Dns.GetHostName();
             _ip = Dns.GetHostEntry(host).AddressList[0];
-            _ipString = _ip.ToString();
-            _checker = new UDPChecker(_ip, _port);
+            _checker = new UDPChecker(_port, _user);
             _checker.Run(this, _cancellationToken.Token);
         }
 
