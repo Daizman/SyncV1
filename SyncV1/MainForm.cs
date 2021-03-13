@@ -213,7 +213,7 @@ namespace SyncV1
         {
             var addrTemplate = "192.168.0.";
             var ipStr = _ip.ToString();
-            for (var i = 0; i < 128; i++)
+            for (var i = 0; i < 192; i++)
             {
                 var curIp = addrTemplate + i.ToString();
                 if (curIp != ipStr)
