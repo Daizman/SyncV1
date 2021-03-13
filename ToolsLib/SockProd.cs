@@ -25,7 +25,7 @@ namespace ToolsLib
             {
                 if (!string.IsNullOrEmpty(data))
                 {
-                    var socket = new Socket(_ip.AddressFamily, SocketType.Stream, ProtocolType.Udp);
+                    var socket = new Socket(_ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                     socket.Connect(_ipEP);
 
                     var des = GetDES(socket);

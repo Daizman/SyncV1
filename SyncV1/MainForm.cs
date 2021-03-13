@@ -166,7 +166,11 @@ namespace SyncV1
 
         private void BAddFile_Click(object sender, EventArgs e)
         {
-
+            if(OFDialog.ShowDialog() == DialogResult.OK)
+            {
+                var lastPt = OFDialog.FileName.Split('\\').Last();
+                File.Copy(OFDialog.FileName, Path.Combine(_user.UserDirectory.Path, lastPt), true);
+            }
             ButtonsBind();
         }
 
@@ -208,7 +212,7 @@ namespace SyncV1
 
             var tasks = Task.Run(() => server.Run(this, _cancellationToken.Token));
 
-            Task.WaitAll(tasks);
+            //Task.WaitAll(tasks);
         }
 
         private void StopServ()
@@ -225,6 +229,11 @@ namespace SyncV1
                 var socketClient = new SockProd(ip, _port);
                 socketClient.Send(_searchedPublicKey);
             }
+        }
+
+        private void AllowToDir_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

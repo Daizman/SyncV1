@@ -32,9 +32,9 @@ namespace CreateFolderWindow
             this.FBDPath = new System.Windows.Forms.FolderBrowserDialog();
             this.LBPath = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.BCreate = new System.Windows.Forms.Button();
-            this.BCancel = new System.Windows.Forms.Button();
             this.BChangePath = new System.Windows.Forms.Button();
+            this.BCancel = new System.Windows.Forms.Button();
+            this.BCreate = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,16 +58,16 @@ namespace CreateFolderWindow
             this.panel1.Size = new System.Drawing.Size(435, 42);
             this.panel1.TabIndex = 2;
             // 
-            // BCreate
+            // BChangePath
             // 
-            this.BCreate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.BCreate.Location = new System.Drawing.Point(0, 0);
-            this.BCreate.Name = "BCreate";
-            this.BCreate.Size = new System.Drawing.Size(122, 42);
-            this.BCreate.TabIndex = 0;
-            this.BCreate.Text = "Создать";
-            this.BCreate.UseVisualStyleBackColor = true;
-            this.BCreate.Click += new System.EventHandler(this.BCreate_Click);
+            this.BChangePath.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BChangePath.Location = new System.Drawing.Point(122, 0);
+            this.BChangePath.Name = "BChangePath";
+            this.BChangePath.Size = new System.Drawing.Size(191, 42);
+            this.BChangePath.TabIndex = 2;
+            this.BChangePath.Text = "Указать путь";
+            this.BChangePath.UseVisualStyleBackColor = true;
+            this.BChangePath.Click += new System.EventHandler(this.BChangePath_Click);
             // 
             // BCancel
             // 
@@ -80,16 +80,16 @@ namespace CreateFolderWindow
             this.BCancel.UseVisualStyleBackColor = true;
             this.BCancel.Click += new System.EventHandler(this.BCancel_Click);
             // 
-            // BChangePath
+            // BCreate
             // 
-            this.BChangePath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BChangePath.Location = new System.Drawing.Point(122, 0);
-            this.BChangePath.Name = "BChangePath";
-            this.BChangePath.Size = new System.Drawing.Size(191, 42);
-            this.BChangePath.TabIndex = 2;
-            this.BChangePath.Text = "Указать путь";
-            this.BChangePath.UseVisualStyleBackColor = true;
-            this.BChangePath.Click += new System.EventHandler(this.BChangePath_Click);
+            this.BCreate.Dock = System.Windows.Forms.DockStyle.Left;
+            this.BCreate.Location = new System.Drawing.Point(0, 0);
+            this.BCreate.Name = "BCreate";
+            this.BCreate.Size = new System.Drawing.Size(122, 42);
+            this.BCreate.TabIndex = 0;
+            this.BCreate.Text = "Создать";
+            this.BCreate.UseVisualStyleBackColor = true;
+            this.BCreate.Click += new System.EventHandler(this.BCreate_Click);
             // 
             // MainForm
             // 

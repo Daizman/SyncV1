@@ -27,6 +27,10 @@ namespace CreateFolderWindow
                 DialogResult = DialogResult.OK;
                 Close();
             }
+            else
+            {
+                MessageBox.Show("Укажите путь");
+            }
         }
 
         private void BCancel_Click(object sender, EventArgs e)

@@ -41,6 +41,7 @@ namespace SyncV1
             this.BDelFile = new System.Windows.Forms.Button();
             this.BAddFile = new System.Windows.Forms.Button();
             this.PublicKey = new System.Windows.Forms.TextBox();
+            this.OFDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuPanel.SuspendLayout();
             this.dirsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FSWatcher)).BeginInit();
@@ -72,6 +73,7 @@ namespace SyncV1
             this.AllowToDir.TabIndex = 5;
             this.AllowToDir.Text = "Предоставить доступ";
             this.AllowToDir.UseVisualStyleBackColor = true;
+            this.AllowToDir.Click += new System.EventHandler(this.AllowToDir_Click);
             // 
             // AddDirBtn
             // 
@@ -203,6 +205,7 @@ namespace SyncV1
         private System.Windows.Forms.TextBox PublicKey;
         private System.Windows.Forms.Button BAddFile;
         private System.Windows.Forms.Button BDelFile;
+        private System.Windows.Forms.OpenFileDialog OFDialog;
     }
 }
 

@@ -24,7 +24,7 @@ namespace ToolsLib
         {
             //ip тот, с которого принимаем
             _ip = ip;
-            _socket = new Socket(_ip.AddressFamily, SocketType.Stream, ProtocolType.Udp);
+            _socket = new Socket(_ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _ipEP = new IPEndPoint(_ip, port);
             _socket.Bind(_ipEP);
             _tasks = new List<Task>();
@@ -37,7 +37,7 @@ namespace ToolsLib
                 return;
             }
 
-            _socket.Listen(300);
+            _socket.Listen(10);
 
             var cancelWaitTask = Task.Run(() =>
             {
