@@ -55,8 +55,8 @@ namespace ToolsLib
                 while (true)
                 {
                     byte[] data = receiver.Receive(ref remoteIp); // получаем данные
-                    string message = Encoding.Unicode.GetString(data);
-                    Console.WriteLine("Собеседник: {0}", message);
+                    string message = Encoding.UTF8.GetString(data);
+                    Console.WriteLine($"Data{message}, ip:{remoteIp}");
                 }
             }
             catch (Exception ex)
@@ -65,7 +65,6 @@ namespace ToolsLib
             }
             finally
             {
-                receiver.Close();
             }
         }
 
