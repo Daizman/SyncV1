@@ -205,6 +205,7 @@ namespace SyncV1
 
         private void StopServ()
         {
+            _checker.Close();
             _cancellationToken.Cancel();
         }
 

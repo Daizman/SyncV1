@@ -21,6 +21,7 @@ namespace ToolsLib
         private readonly int _port;
         private readonly User _user;
         private IMessageHandler _messageHandler;
+        private UdpClient _reciv;
 
         public UDPChecker(int port, User user)
         {
@@ -44,13 +45,13 @@ namespace ToolsLib
 
         private void ReceiveMessage()
         {
-            UdpClient receiver = new UdpClient(_port); // UdpClient для получения данных
+            _reciv = new UdpClient(_port); // UdpClient для получения данных
             IPEndPoint remoteIp = null; // адрес входящего подключения
             try
             {
                 while (true)
                 {
-                    byte[] data = receiver.Receive(ref remoteIp); // получаем данные
+                    byte[] data = _reciv.Receive(ref remoteIp); // получаем данные
                     string message = Encoding.UTF8.GetString(data);
                     if (_user.PublicKey == message)
                     {
@@ -106,6 +107,11 @@ namespace ToolsLib
             finally
             {
             }
+        }
+
+        public void Close()
+        {
+            _reciv.Close();
         }
 
         public void Send(string data, IPAddress ip)
