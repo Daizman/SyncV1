@@ -212,9 +212,14 @@ namespace SyncV1
         private void SendSocketAsync()
         {
             var addrTemplate = "192.168.0.";
+            var ipStr = _ip.ToString();
             for (var i = 0; i < 256; i++)
             {
-                _checker.Send(_searchedPublicKey, IPAddress.Parse(addrTemplate + i.ToString()));
+                var curIp = addrTemplate + i.ToString();
+                if (curIp != ipStr)
+                {
+                    _checker.Send(_searchedPublicKey, IPAddress.Parse(curIp));
+                }
             }
         }
 
