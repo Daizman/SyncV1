@@ -26,10 +26,6 @@ namespace ToolsLib
         private User _probFriend;
         private string _probKey;
 
-        public delegate void CreateDir(object sender, EventArgs e);
-
-        public CreateDir CD;
-
         public UDPChecker(int port, User user)
         {
             _port = port;
@@ -88,7 +84,7 @@ namespace ToolsLib
                             var test = MessageBox.Show($"Хотите получить доступ к директории пользователя: {remoteIp}?", "Доступ", MessageBoxButtons.YesNo);
                             if (test == DialogResult.Yes)
                             {
-                                CD(null, null);
+                                _messageHandler.HandleMessage(_probFriend, null);
                                 if (_user.UserDirectory.Path == "")
                                 {
                                     Send("DENIED", remoteIp.Address);

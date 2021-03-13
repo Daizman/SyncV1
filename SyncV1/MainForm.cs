@@ -192,6 +192,11 @@ namespace SyncV1
                 MessageBox.Show($"Пользователь {remote.Address} отказался от предложения");
                 return;
             }
+            if(user != null && remote == null)
+            {
+                AddDirBtn_Click(null, null);
+                return;
+            }
             MessageBox.Show("Пользователь согласился");
             _user.Friends.Users.Add(user);
             AllowedToDirList.Items.Add(remote.Address.ToString());
