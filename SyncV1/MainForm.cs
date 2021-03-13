@@ -184,6 +184,8 @@ namespace SyncV1
 
         public void HandleMessage(string msg)
         {
+            var test = JsonConvert.DeserializeObject<string>(msg);
+
             /*var cinemaSiteUsers = JsonConvert.DeserializeObject<List<CinemaSiteUser>>(msg);
 
             var dbWorker = new DBWorker(ServerSettings.Default.DbNormalizePATH);
@@ -209,7 +211,7 @@ namespace SyncV1
             _ip = Dns.GetHostEntry(host).AddressList[0];
             _ipString = _ip.ToString();
 
-            var server = new SockCons(_ip, _port);
+            var server = new SockCons(_ip, _port, _user.PublicKey);
 
             var tasks = Task.Run(() => server.Run(this, _cancellationToken.Token));
 
@@ -239,6 +241,7 @@ namespace SyncV1
             if (addUserToDir.DialogResult == DialogResult.OK)
             {
                 _searchedPublicKey = addUserToDir.AddedUserPublicKey;
+                SendSocket();
             }
         }
     }

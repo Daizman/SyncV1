@@ -34,7 +34,7 @@ namespace ToolsLib
 
                     var encryptedData = Cryptographer.SymmetricEncrypt(data, des);
                     //отправляем данные
-                    socket.Send(encryptedData);
+                    socket.SendTo(encryptedData, _ipEP);
 
                     socket.Shutdown(SocketShutdown.Both);
                     socket.Close();
@@ -57,18 +57,17 @@ namespace ToolsLib
 
         private DESCryptoServiceProvider GetDES(Socket socket)
         {
-/*            var buffer = new byte[1024];
+            var buffer = new byte[1024];
 
             // Принимаем RSA public
             EndPoint ipTemp = new IPEndPoint(_ip, 11000);
-            var bytedPublicString = 
             var sizeRSA = socket.ReceiveFrom(buffer, ref ipTemp);
             var publicKeyJsonByte = new byte[sizeRSA];
             Array.Copy(buffer, 0, publicKeyJsonByte, 0, sizeRSA);
 
-            var publicKeyJson = Encoding.UTF8.GetString(publicKeyJsonByte);*/
+            var publicKeyJson = Encoding.UTF8.GetString(publicKeyJsonByte);
 
-            var publicKey = JsonConvert.DeserializeObject<RSAPublicKeyParameters>(_publicKey);
+            var publicKey = JsonConvert.DeserializeObject<RSAPublicKeyParameters>(publicKeyJson);
             var publicKeyParameters = publicKey.GetRSAParameters();
 
             var des = Cryptographer.GetDES();

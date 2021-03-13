@@ -19,15 +19,16 @@ namespace ToolsLib
         private readonly List<Task> _tasks;
         private readonly IPEndPoint _ipEP;
         private readonly IPAddress _ip;
+        private readonly string _publicKey;
 
-        public SockCons(IPAddress ip, int port)
+        public SockCons(IPAddress ip, int port, string publicKey)
         {
-            //ip тот, с которого принимаем
             _ip = ip;
             _socket = new Socket(_ip.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
             _ipEP = new IPEndPoint(_ip, port);
             _socket.Bind(_ipEP);
             _tasks = new List<Task>();
+            _publicKey = publicKey;
         }
 
         public void Run(IMessageHandler handler, CancellationToken cancellationToken)
