@@ -194,7 +194,14 @@ namespace SyncV1
             }
             if(user != null && remote == null)
             {
-                AddDirBtn_Click(null, null);
+                var addFolderDialog = new CreateFolderWindow.MainForm();
+                if (addFolderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    _user.UserDirectory.Path = addFolderDialog.SelectedPath;
+                    SetWatcher();
+                    FillDirectoryInfo();
+                    ButtonsBind();
+                }
                 return;
             }
             MessageBox.Show("Пользователь согласился");
