@@ -35,35 +35,38 @@ namespace ToolsLib
 
         public void Run(IMessageHandler handler, CancellationToken cancellationToken)
         {
-            var cancelWaitTask = Task.Run(() =>
+            try
             {
-                using (var resetEvent = new ManualResetEvent(false))
-                {
-                    cancellationToken.Register(() => resetEvent.Set());
-                    resetEvent.WaitOne();
-                }
-            });
-            Task.Run(() => {
-                try
-                {
-                    while (true)
-                    {
-                        Console.WriteLine("Waiting for broadcast");
-                        byte[] bytes = _client.Receive(ref _anyIPEP);
+                Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+                receiveThread.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
-                        Console.WriteLine($"Received broadcast from {_anyIPEP} :");
-                        Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
-                    }
-                }
-                catch (SocketException e)
+        private void ReceiveMessage()
+        {
+            UdpClient receiver = new UdpClient(_port); // UdpClient для получения данных
+            IPEndPoint remoteIp = null; // адрес входящего подключения
+            try
+            {
+                while (true)
                 {
-                    Console.WriteLine(e);
+                    byte[] data = receiver.Receive(ref remoteIp); // получаем данные
+                    string message = Encoding.Unicode.GetString(data);
+                    Console.WriteLine("Собеседник: {0}", message);
                 }
-                finally
-                {
-                    _client.Close();
-                }
-            });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                receiver.Close();
+            }
         }
 
         public void Send(string data, IPAddress ip)
