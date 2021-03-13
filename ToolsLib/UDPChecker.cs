@@ -43,21 +43,20 @@ namespace ToolsLib
                     resetEvent.WaitOne();
                 }
             });
-            Task<UdpReceiveResult> recieved;
             Task.Run(() => {
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     Console.WriteLine("StartRec");
-                    recieved = _client.ReceiveAsync();
+                    var recieved = _client.Receive(ref _anyIPEP);
 
-                    Task.WaitAny(recieved, cancelWaitTask);
+                    Task.WaitAny(cancelWaitTask);
                     if (cancelWaitTask.IsCompleted)
                     {
                         break;
                     }
                     Console.WriteLine("StartAft");
 
-                    var task = Task.Run(() => ReceiveMessage(recieved.Result));
+                    var task = Task.Run(() => ReceiveMessage(recieved));
                     Console.WriteLine("Task");
 
                     _tasks.Add(task);
