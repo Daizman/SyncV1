@@ -63,29 +63,29 @@ namespace ToolsLib
                                 var goodAnswer = new Tuple<bool, User>(true, _user);
                                 var answJson = JsonConvert.SerializeObject(goodAnswer);
                                 Send(answJson, remoteIp.Address);
-                                break;
+                                return;
                             }
                             else
                             {
                                 Send("DENIED", remoteIp.Address);
-                                break;
+                                return;
                             }
                         }
                         else
                         {
                             Send("HAVEDIR", remoteIp.Address);
-                            break;
+                            return;
                         }
                     }
                     else if (message == "HAVEDIR")
                     {
                         _messageHandler.HandleMessage(null, null);
-                        break;
+                        return;
                     }
                     else if (message == "DENIED") 
                     {
                         _messageHandler.HandleMessage(null, remoteIp);
-                        break;
+                        return;
                     }
                     try
                     {
@@ -93,7 +93,7 @@ namespace ToolsLib
                         if (answ.Item1)
                         {
                             _messageHandler.HandleMessage(answ.Item2, remoteIp);
-                            break;
+                            return;
                         }
                     }
                     catch
