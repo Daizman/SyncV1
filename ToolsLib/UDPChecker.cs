@@ -52,6 +52,7 @@ namespace ToolsLib
                     Task.WaitAny(cancelWaitTask);
                     if (cancelWaitTask.IsCompleted)
                     {
+                        Console.WriteLine("In_break");
                         break;
                     }
                     Console.WriteLine("StartAft");
