@@ -69,10 +69,8 @@ namespace ToolsLib.UserClasses
 
         private string GeneratePublicKey()
         {
-            var random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, 42)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+            var publicKey = Cryptor.Cryptographer.GetRSA().ExportParameters(false);
+            return JsonConvert.SerializeObject(new Cryptor.RSAPublicKeyParameters(publicKey));
         }
 
         public string PublicKey
