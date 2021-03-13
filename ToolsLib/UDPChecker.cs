@@ -118,7 +118,7 @@ namespace ToolsLib
             if (!string.IsNullOrEmpty(data))
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
-                client.Send(dBytes, dBytes.Length);
+                client.Send(dBytes, dBytes.Length, end);
             }
         }
     }
