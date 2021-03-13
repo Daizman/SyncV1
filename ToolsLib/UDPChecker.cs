@@ -77,12 +77,12 @@ namespace ToolsLib
                             continue;
                         }
                     }
-                    if (message == "HAVEDIR")
+                    else if (message == "HAVEDIR")
                     {
                         _messageHandler.HandleMessage(null, null);
                         continue;
                     }
-                    if (message == "DENIED") 
+                    else if (message == "DENIED") 
                     {
                         _messageHandler.HandleMessage(null, remoteIp);
                         continue;
