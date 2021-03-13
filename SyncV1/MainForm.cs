@@ -25,6 +25,7 @@ namespace SyncV1
         private readonly CancellationTokenSource _cancellationToken;
         private readonly object _locker;
         private string _ipString;
+        private UDPChecker _checker;
         private IPAddress _ip;
         private int _port = 11000;
         private string _searchedPublicKey;
@@ -210,12 +211,14 @@ namespace SyncV1
             var host = Dns.GetHostName();
             _ip = Dns.GetHostEntry(host).AddressList[0];
             _ipString = _ip.ToString();
+            _checker = new UDPChecker();
+            _checker.Run();
 
-            var server = new SockCons(_ip, _port, _user.PublicKey);
+            /*var server = new SockCons(_ip, _port, _user.PublicKey);
 
             var tasks = Task.Run(() => server.Run(this, _cancellationToken.Token));
 
-            //Task.WaitAll(tasks);
+            Task.WaitAll(tasks);*/
         }
 
         private void StopServ()
@@ -226,11 +229,14 @@ namespace SyncV1
         private void SendSocket()
         {
             var addrTemplate = "192.168.0.";
+            var msg = Encoding.UTF8.GetBytes(_searchedPublicKey);
             for (var i = 0; i < 256; i++)
             {
-                var ip = IPAddress.Parse(addrTemplate + i.ToString());
-                var socketClient = new SockProd(ip, _port, _searchedPublicKey);
-                socketClient.Send("Hi");
+                //var ip = IPAddress.Parse(addrTemplate + i.ToString());
+                var answ = _checker.SendReceiveAsync(msg, addrTemplate + i.ToString(), _port, 1);
+                var tt = 1;
+                //var socketSend = new SockProd(ip, _port, _searchedPublicKey);
+                //socketSend.Send("Hi");
             }
         }
 
