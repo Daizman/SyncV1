@@ -41,26 +41,29 @@ namespace ToolsLib
                     resetEvent.WaitOne();
                 }
             });
-            try
-            {
-                while (!cancellationToken.IsCancellationRequested)
+            Task.Run(()=> {
+                try
                 {
-                    var recieved = _client.ReceiveAsync();
-                    //Task.WaitAny(recieved, cancelWaitTask);
-
-                    if (cancelWaitTask.IsCompleted)
+                    while (!cancellationToken.IsCancellationRequested)
                     {
-                        break;
+                        var recieved = _client.ReceiveAsync();
+                        Task.WaitAny(recieved, cancelWaitTask);
+
+                        if (cancelWaitTask.IsCompleted)
+                        {
+                            break;
+                        }
+
+                        var task = Task.Run(() => ReceiveMessage(handler, recieved.Result));
+
+                        _tasks.Add(task);
                     }
-
-                    var task = Task.Run(() => ReceiveMessage(handler, recieved.Result));
-
-                    _tasks.Add(task);
                 }
-            }
-            catch (Exception e)
-            {
-            }
+                catch (Exception e)
+                {
+                }
+            });
+            
         }
 
         public void Send(string data, string ip)
@@ -68,8 +71,11 @@ namespace ToolsLib
             if (!string.IsNullOrEmpty(data))
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.WriteLine("!!!!!!!!!ИУАSEND!!!!!!!!!!");
+                Console.ResetColor();
                 _client.SendAsync(dBytes, dBytes.Length, ip, _port);
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.BackgroundColor = ConsoleColor.Green;
                 Console.WriteLine("!!!!!!!!!SEND!!!!!!!!!!");
                 Console.ResetColor();
             }
@@ -77,7 +83,7 @@ namespace ToolsLib
 
         private void ReceiveMessage(IMessageHandler handler, UdpReceiveResult res)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("!!!!!!!!RECIVE!!!!!!!!!");
             Console.ResetColor();
         }
