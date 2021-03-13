@@ -185,26 +185,7 @@ namespace SyncV1
 
         public void HandleMessage(string msg)
         {
-            var test = JsonConvert.DeserializeObject<string>(msg);
 
-            /*var cinemaSiteUsers = JsonConvert.DeserializeObject<List<CinemaSiteUser>>(msg);
-
-            var dbWorker = new DBWorker(ServerSettings.Default.DbNormalizePATH);
-            dbWorker.Connect();
-            foreach (var siteUser in cinemaSiteUsers)
-            {
-                var site = new Site(siteUser.SiteName, siteUser.SiteURL, siteUser.SiteAccess, siteUser.SiteDescription);
-                var user = new User(siteUser.UserName, siteUser.UserPassword, siteUser.UserSalt, siteUser.UserRegDate, siteUser.UserRating, site);
-
-                long siteId;
-
-                lock (locker)
-                {
-                    siteId = dbWorker.AddSite(site);
-                }
-                dbWorker.AddUser(user, siteId);
-            }
-            dbWorker.Close();*/
         }
         private void RunServ()
         {
@@ -213,12 +194,6 @@ namespace SyncV1
             _ipString = _ip.ToString();
             _checker = new UDPChecker(_ip, _port);
             _checker.Run(this, _cancellationToken.Token);
-
-            /*var server = new SockCons(_ip, _port, _user.PublicKey);
-
-            var tasks = Task.Run(() => server.Run(this, _cancellationToken.Token));
-
-            Task.WaitAll(tasks);*/
         }
 
         private void StopServ()
@@ -226,35 +201,23 @@ namespace SyncV1
             _cancellationToken.Cancel();
         }
 
-        private async Task SendSocketAsync()
+        private void SendSocketAsync()
         {
             var addrTemplate = "192.168.0.";
             for (var i = 0; i < 256; i++)
             {
-                //var ip = IPAddress.Parse(addrTemplate + i.ToString());
-                try
-                {
-                    _checker.Send(_searchedPublicKey, addrTemplate + i.ToString());
-                    var tt = 1;
-                    Console.WriteLine("SetMeUp");
-                }
-                catch
-                { 
-                
-                }
-                //var socketSend = new SockProd(ip, _port, _searchedPublicKey);
-                //socketSend.Send("Hi");
+
             }
         }
 
-        private async void AllowToDir_ClickAsync(object sender, EventArgs e)
+        private void AllowToDir_ClickAsync(object sender, EventArgs e)
         {
             var addUserToDir = new AddUserToDirWindow();
             addUserToDir.ShowDialog();
             if (addUserToDir.DialogResult == DialogResult.OK)
             {
                 _searchedPublicKey = addUserToDir.AddedUserPublicKey;
-                await SendSocketAsync();
+                SendSocketAsync();
             }
         }
     }

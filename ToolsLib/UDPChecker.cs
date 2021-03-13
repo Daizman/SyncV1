@@ -52,12 +52,13 @@ namespace ToolsLib
             });
         }
 
-        public void Send(string data, string ip)
+        public void Send(string data)
         {
+            var client = new UdpClient(_anyIPEP);
             if (!string.IsNullOrEmpty(data))
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
-                _client.Send(dBytes, dBytes.Length, ip, _port);
+                client.Send(dBytes, dBytes.Length);
                 Console.WriteLine("!!!!!!!!!SEND!!!!!!!!!!");
             }
         }
