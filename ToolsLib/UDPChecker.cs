@@ -52,12 +52,16 @@ namespace ToolsLib
                 while (true)
                 {
                     byte[] data = _reciv.Receive(ref remoteIp); // получаем данные
+                    if (remoteIp.Port != _port)
+                    {
+                        continue;
+                    }
                     string message = Encoding.UTF8.GetString(data);
                     if (_user.PublicKey == message)
                     {
                         if (_user.UserDirectory.Path == "")
                         {
-                            var test = MessageBox.Show("Доступ", $"Хотите получить доступ к директории пользователя: {remoteIp}?", MessageBoxButtons.YesNo);
+                            var test = MessageBox.Show($"Хотите получить доступ к директории пользователя: {remoteIp}?", "Доступ", MessageBoxButtons.YesNo);
                             if (test == DialogResult.Yes)
                             {
                                 var goodAnswer = new Tuple<bool, User>(true, _user);
@@ -91,7 +95,6 @@ namespace ToolsLib
                         {
                             _messageHandler.HandleMessage(answ.Item2, remoteIp);
                             return;
-
                         }
                     }
                     catch
