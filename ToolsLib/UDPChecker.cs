@@ -114,7 +114,7 @@ namespace ToolsLib
         {
             var client = new UdpClient();
             var end = new IPEndPoint(ip, _port);
-            client.Connect(end);
+           // client.Connect(end);
             if (!string.IsNullOrEmpty(data))
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
