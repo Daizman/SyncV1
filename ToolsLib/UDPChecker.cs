@@ -43,8 +43,13 @@ namespace ToolsLib
                     resetEvent.WaitOne();
                 }
             });
-            var recieved = _client.Receive(ref _anyIPEP);
-            Task.Run(() => ReceiveMessage(handler, recieved));
+            byte[] recieved;
+            Task.Run(() => {
+                Task.WaitAll(Task.Run(() => {
+                    recieved = _client.Receive(ref _anyIPEP);
+                    ReceiveMessage(recieved);
+                }));
+            });
         }
 
         public void Send(string data, string ip)
@@ -57,7 +62,7 @@ namespace ToolsLib
             }
         }
 
-        private void ReceiveMessage(IMessageHandler handler, object res)
+        private void ReceiveMessage(object res)
         {
             Console.WriteLine("!!!!!!!!RECIVE!!!!!!!!!");
         }
