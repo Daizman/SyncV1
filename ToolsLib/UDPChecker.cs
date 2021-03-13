@@ -69,41 +69,17 @@ namespace ToolsLib
             {
                 var dBytes = Encoding.UTF8.GetBytes(data);
                 _client.SendAsync(dBytes, dBytes.Length, ip, _port);
-                var stp = 1;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("!!!!!!!!!SEND!!!!!!!!!!");
+                Console.ResetColor();
             }
         }
 
         private void ReceiveMessage(IMessageHandler handler, UdpReceiveResult res)
         {
-            var resc = 1;
-            var stp = 1;
-        }
-
-        private DESCryptoServiceProvider GetDES(Socket socket)
-        {
-            var rsa = Cryptographer.GetRSA();
-
-            var publicKey = rsa.ExportParameters(false);
-            var privateKey = rsa.ExportParameters(true);
-
-            var rsaBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new RSAPublicKeyParameters(publicKey)));
-            socket.Send(rsaBytes);
-
-            var buffer = new byte[1024];
-            var sizeDES = socket.Receive(buffer);
-            var encryptedDES = new byte[sizeDES];
-            Array.Copy(buffer, 0, encryptedDES, 0, sizeDES);
-            var encryptedDESstr = Encoding.UTF8.GetString(encryptedDES);
-
-            var encrypdedDesParams = JsonConvert.DeserializeObject<DESParameters>(encryptedDESstr);
-
-            var desIV = Cryptographer.RSADecrypt(encrypdedDesParams.IV, privateKey);
-            var desKey = Cryptographer.RSADecrypt(encrypdedDesParams.Key, privateKey);
-
-            var des = Cryptographer.GetDES(desIV, desKey);
-
-
-            return des;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("!!!!!!!!RECIVE!!!!!!!!!");
+            Console.ResetColor();
         }
     }
 }
